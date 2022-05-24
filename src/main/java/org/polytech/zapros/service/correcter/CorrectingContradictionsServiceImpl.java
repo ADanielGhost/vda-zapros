@@ -8,15 +8,15 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Component;
-
 import org.polytech.zapros.bean.Answer;
+import org.polytech.zapros.bean.Answer.AnswerAuthor;
 import org.polytech.zapros.bean.Assessment;
 import org.polytech.zapros.bean.BuildingQesCheckResult;
 import org.polytech.zapros.bean.Criteria;
 import org.polytech.zapros.bean.QuasiExpert;
 import org.polytech.zapros.bean.QuasiExpertConfig;
 import org.polytech.zapros.bean.SuggestedAnswer;
+import org.springframework.stereotype.Component;
 
 @Component
 public class CorrectingContradictionsServiceImpl implements CorrectingContradictionsService {
@@ -77,8 +77,8 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
 
         for (Assessment second: suggestedAnswer.getJ()) {
             Optional<Answer> answer = wrongAnswerList.stream()
-                .filter(x -> (x.getI() == first && x.getJ() == second) ||
-                    (x.getI() == second && x.getJ() == first))
+                .filter(x -> (x.getI() == first && x.getJ() == second) || (x.getI() == second && x.getJ() == first))
+                .filter(x -> x.getAnswerAuthor() != AnswerAuthor.REPLACED)
                 .findFirst();
 
             if (answer.isPresent()) {
@@ -86,12 +86,19 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
             }
         }
 
-        Assessment second = suggestedAnswer.getJ().get(0);
+        for (Assessment second: suggestedAnswer.getJ()) {
+            Optional<Answer> answer = answerList.stream()
+                .filter(x -> (x.getI() == first && x.getJ() == second) || (x.getI() == second && x.getJ() == first))
+                .filter(x -> x.getAnswerAuthor() != AnswerAuthor.REPLACED)
+                .findFirst();
 
-        return answerList.stream()
-            .filter(x -> (x.getI() == first && x.getJ() == second) || (x.getI() == second && x.getJ() == first))
-            .findFirst()
-            .orElseThrow(IllegalStateException::new);
+            if (answer.isPresent()) {
+                return answer.get();
+            }
+        }
+
+        // TODO сказать, что оч много исправлений
+        throw new IllegalStateException();
     }
 
     private SuggestedAnswer findMax(Map<Assessment, Integer> mapContradictions) {
