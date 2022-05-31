@@ -4,35 +4,41 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Bean для оценки квазиэксперта.
  */
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Assessment {
 
-    private final long id;
+    private long id;
 
     /**
      * Имя для данной оценки.
      */
-    private final String name;
+    private String name;
 
     /**
      * Id критерия, которому она принадлежит.
      */
-    private final long criteriaId;
+    private long criteriaId;
 
     /**
      * Ранг среди оценок одного критерия.
      */
-    private final int rank;
+    private int rank;
 
     /**
      * Уникальный номер.
      */
-    private final int orderId;
+    private int orderId;
 
     @Deprecated
     public static Assessment getByOrderId(int orderId, List<Criteria> criteriaList) {

@@ -4,25 +4,29 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
  * Bean для альтернативы.
  */
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @ToString
 public class Alternative {
 
-    private final long id;
+    private long id;
 
     /**
      * Имя данной альтернативы.
      */
-    private final String name;
+    private String name;
 
     /**
      * Оценки данной альтернативы.
      */
-    private final List<Assessment> assessments;
+    private List<Assessment> assessments;
 }
