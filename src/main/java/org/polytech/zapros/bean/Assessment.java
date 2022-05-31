@@ -1,21 +1,18 @@
 package org.polytech.zapros.bean;
 
-import java.util.Comparator;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 /**
  * Bean для оценки квазиэксперта.
  */
 @Getter
-@Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class Assessment {
 
-    private long id;
+    private final long id;
 
     /**
      * Имя для данной оценки.
@@ -35,19 +32,9 @@ public class Assessment {
     /**
      * Уникальный номер.
      */
-    private int orderId;
+    private final int orderId;
 
-    public static void calculateId(List<Criteria> criteriaList) {
-        criteriaList.forEach(criteria -> criteria.getAssessments().sort(Comparator.comparingInt(Assessment::getRank)));
-        int cur = 0;
-        for (Criteria c: criteriaList) {
-            for (Assessment a: c.getAssessments()) {
-                a.orderId = cur;
-                cur++;
-            }
-        }
-    }
-
+    @Deprecated
     public static Assessment getByOrderId(int orderId, List<Criteria> criteriaList) {
         for (Criteria c: criteriaList) {
             for (Assessment a: c.getAssessments()) {

@@ -2,24 +2,22 @@ package org.polytech.zapros.bean;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
  * Bean для критерия.
  */
 @Getter
-@Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
 @ToString
 public class Criteria {
 
     /**
      * Уникальный номер.
      */
-    private int id;
+    private long id;
 
     /**
      * Имя для данного критерия.
@@ -30,4 +28,6 @@ public class Criteria {
      * Сами оценки.
      */
     private final List<Assessment> assessments;
+
+    private final long orderId;
 }
