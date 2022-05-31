@@ -24,21 +24,21 @@ public class AnswerServiceImpl implements AnswerService {
         result.setOver(false);
         result.setAnswerList(new ArrayList<>());
         result.setCriteriaList(criteriaList);
-        result.setpCriteriaI(0);
-        result.setpCriteriaJ(1);
-        result.setpAssessmentI(1);
-        result.setpAssessmentJ(1);
+        result.setPCriteriaI(0);
+        result.setPCriteriaJ(1);
+        result.setPAssessmentI(1);
+        result.setPAssessmentJ(1);
         return result;
     }
 
     @Override
     public AnswerCheckResult addAnswer(AnswerCheckResult checkResult, AnswerType answerType, QuasiExpertConfig config) {
 
-        int pCriteriaI = checkResult.getpCriteriaI();
-        int pCriteriaJ = checkResult.getpCriteriaJ();
+        int pCriteriaI = checkResult.getPCriteriaI();
+        int pCriteriaJ = checkResult.getPCriteriaJ();
 
-        int pAssessmentI = checkResult.getpAssessmentI();
-        int pAssessmentJ = checkResult.getpAssessmentJ();
+        int pAssessmentI = checkResult.getPAssessmentI();
+        int pAssessmentJ = checkResult.getPAssessmentJ();
 
         Criteria criteriaI = checkResult.getCriteriaList().get(pCriteriaI);
         Criteria criteriaJ = checkResult.getCriteriaList().get(pCriteriaJ);
@@ -51,25 +51,25 @@ public class AnswerServiceImpl implements AnswerService {
 
         switch (answerType) {
             case BETTER: {
-                for (int i = pAssessmentJ + 1; i < criteriaJ.getNumOfAssessments(); i++) {
+                for (int i = pAssessmentJ + 1; i < criteriaJ.getAssessments().size(); i++) {
                     Assessment tempAssessmentJ = criteriaJ.getAssessments().get(i);
                     answerList.add(new Answer(assessmentI, tempAssessmentJ, answerType, AnswerAuthor.TRANSIENT));
                 }
                 pAssessmentI++;
             } break;
             case WORSE: {
-                for (int i = pAssessmentI + 1; i < criteriaI.getNumOfAssessments(); i++) {
+                for (int i = pAssessmentI + 1; i < criteriaI.getAssessments().size(); i++) {
                     Assessment tempAssessmentI = criteriaI.getAssessments().get(i);
                     answerList.add(new Answer(tempAssessmentI, assessmentJ, answerType, AnswerAuthor.TRANSIENT));
                 }
                 pAssessmentJ++;
             } break;
             case EQUAL: {
-                for (int i = pAssessmentJ + 1; i < criteriaJ.getNumOfAssessments(); i++) {
+                for (int i = pAssessmentJ + 1; i < criteriaJ.getAssessments().size(); i++) {
                     Assessment tempAssessmentJ = criteriaJ.getAssessments().get(i);
                     answerList.add(new Answer(assessmentI, tempAssessmentJ, AnswerType.BETTER, AnswerAuthor.TRANSIENT));
                 }
-                for (int i = pAssessmentI + 1; i < criteriaI.getNumOfAssessments(); i++) {
+                for (int i = pAssessmentI + 1; i < criteriaI.getAssessments().size(); i++) {
                     Assessment tempAssessmentI = criteriaI.getAssessments().get(i);
                     answerList.add(new Answer(tempAssessmentI, assessmentJ, AnswerType.WORSE, AnswerAuthor.TRANSIENT));
                 }
@@ -80,8 +80,8 @@ public class AnswerServiceImpl implements AnswerService {
         }
 
         // если мы сравнили ВСЕ оценки в рамках пары критериев
-        if ((pAssessmentI == criteriaI.getNumOfAssessments()) ||
-            (pAssessmentJ == criteriaJ.getNumOfAssessments())) {
+        if ((pAssessmentI == criteriaI.getAssessments().size()) ||
+            (pAssessmentJ == criteriaJ.getAssessments().size())) {
 
             pCriteriaJ++;
             pAssessmentI = 1;
@@ -101,10 +101,10 @@ public class AnswerServiceImpl implements AnswerService {
         checkResult.setOver(false);
         result.setAnswerList(answerList);
         result.setCriteriaList(checkResult.getCriteriaList());
-        result.setpCriteriaI(pCriteriaI);
-        result.setpCriteriaJ(pCriteriaJ);
-        result.setpAssessmentI(pAssessmentI);
-        result.setpAssessmentJ(pAssessmentJ);
+        result.setPCriteriaI(pCriteriaI);
+        result.setPCriteriaJ(pCriteriaJ);
+        result.setPAssessmentI(pAssessmentI);
+        result.setPAssessmentJ(pAssessmentJ);
         return result;
     }
 

@@ -38,8 +38,8 @@ public abstract class VdaZaprosServiceImpl implements VdaZaprosService {
     }
 
     @Override
-    public BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config) {
-        return quasiExpertService.buildQes(answerList, config);
+    public BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config, List<Criteria> criteriaList) {
+        return quasiExpertService.buildQes(answerList, config, criteriaList);
     }
 
     @Override
@@ -48,7 +48,7 @@ public abstract class VdaZaprosServiceImpl implements VdaZaprosService {
     }
 
     @Override
-    public List<AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, QuasiExpertConfig config) {
-        return alternativeRankingService.rankAlternatives(qes, alternativeList, config);
+    public List<AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config) {
+        return alternativeRankingService.rankAlternatives(qes, alternativeList, criteriaList, config);
     }
 }

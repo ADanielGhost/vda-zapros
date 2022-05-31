@@ -1,11 +1,21 @@
 package org.polytech.zapros.bean;
 
+import java.util.Comparator;
 import java.util.List;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 /**
  * Bean для оценки квазиэксперта.
  */
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class Assessment {
+
+    private long id;
 
     /**
      * Имя для данной оценки.
@@ -25,59 +35,26 @@ public class Assessment {
     /**
      * Уникальный номер.
      */
-    private int id;
+    private int orderId;
 
-    public Assessment(String name, int criteriaId, int rang){
-        this.name = name;
-        this.criteriaId = criteriaId;
-        this.rank = rang;
-    }
-
-    public static void calculateId(List<Criteria> criteria) {
+    public static void calculateId(List<Criteria> criteriaList) {
+        criteriaList.forEach(criteria -> criteria.getAssessments().sort(Comparator.comparingInt(Assessment::getRank)));
         int cur = 0;
-        for (Criteria c: criteria) {
+        for (Criteria c: criteriaList) {
             for (Assessment a: c.getAssessments()) {
-                a.id = cur;
+                a.orderId = cur;
                 cur++;
             }
         }
     }
 
-    public static Assessment getById(int id, List<Criteria> criteriaList) {
+    public static Assessment getByOrderId(int orderId, List<Criteria> criteriaList) {
         for (Criteria c: criteriaList) {
             for (Assessment a: c.getAssessments()) {
-                if (id == a.getId()) return a;
+                if (orderId == a.getOrderId()) return a;
             }
         }
         // невозможный кейс
-        throw new IllegalStateException("Assessment.getById failed");
-    }
-
-    //region getters
-    public String getName() {
-        return this.name;
-    }
-
-    public int getCriteriaId() {
-        return this.criteriaId;
-    }
-
-    public int getRank() {
-        return this.rank;
-    }
-
-    public int getId() {
-        return this.id;
-    }
-    //endregion
-
-    @Override
-    public String toString() {
-        return "Assessment{" +
-            "name='" + name + '\'' +
-            ", criteriaId=" + criteriaId +
-            ", rank=" + rank +
-            ", id=" + id +
-            '}';
+        throw new IllegalStateException("Assessment.getByOrderId failed");
     }
 }

@@ -133,9 +133,9 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
     }
 
     @Override
-    public List<AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, QuasiExpertConfig config) {
-        List<QuasiExpertQV> qeqvs = getRanksBLUE(qes, config.getCriteriaList());
-        //List<QuasiExpertQV> qeqvs = getRanksRED(qes, config.getCriteriaList());
+    public List<AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config) {
+        List<QuasiExpertQV> qeqvs = getRanksBLUE(qes, criteriaList);
+        //List<QuasiExpertQV> qeqvs = getRanksRED(qes, criteriaList);
 
         List<AlternativeResult> result = alternativeList.stream()
             .map(alternative -> {

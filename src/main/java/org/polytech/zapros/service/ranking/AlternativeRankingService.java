@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.polytech.zapros.bean.Alternative;
 import org.polytech.zapros.bean.AlternativeResult;
+import org.polytech.zapros.bean.Criteria;
 import org.polytech.zapros.bean.QuasiExpert;
 import org.polytech.zapros.bean.QuasiExpertConfig;
 
@@ -16,5 +17,5 @@ public interface AlternativeRankingService {
     /**
      * Смотри {@link org.polytech.zapros.service.main.VdaZaprosService#rankAlternatives}
      */
-    List<AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, QuasiExpertConfig config);
+    List<AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config);
 }

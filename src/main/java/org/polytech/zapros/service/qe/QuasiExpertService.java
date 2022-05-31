@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.polytech.zapros.bean.Answer;
 import org.polytech.zapros.bean.BuildingQesCheckResult;
+import org.polytech.zapros.bean.Criteria;
 import org.polytech.zapros.bean.QuasiExpertConfig;
 
 /**
@@ -16,5 +17,5 @@ public interface QuasiExpertService {
     /**
      * Смотри {@link org.polytech.zapros.service.main.VdaZaprosService#buildQes}
      */
-    BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config);
+    BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config, List<Criteria> criteriaList);
 }

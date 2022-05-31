@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.polytech.zapros.bean.Answer;
 import org.polytech.zapros.bean.BuildingQesCheckResult;
+import org.polytech.zapros.bean.Criteria;
 import org.polytech.zapros.bean.QuasiExpert;
 import org.polytech.zapros.bean.QuasiExpertConfig;
 
@@ -19,5 +20,5 @@ public interface CorrectingContradictionsService {
      * @param config конфиг квазиэксперта.
      * @return список ответов.
      */
-    BuildingQesCheckResult correct(List<Answer> answerList, List<QuasiExpert> qes, QuasiExpertConfig config);
+    BuildingQesCheckResult correct(List<Answer> answerList, List<QuasiExpert> qes, QuasiExpertConfig config, List<Criteria> criteriaList);
 }

@@ -2,10 +2,21 @@ package org.polytech.zapros.bean;
 
 import java.util.List;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  * Bean для альтернативы.
  */
+@Getter
+@Setter
+@RequiredArgsConstructor
+@ToString
 public class Alternative {
+
+    private long id;
 
     /**
      * Имя данной альтернативы.
@@ -16,17 +27,4 @@ public class Alternative {
      * Оценки данной альтернативы.
      */
     private final List<Assessment> assessments;
-
-    public Alternative(String name, List<Assessment> assessments) {
-        this.name = name;
-        this.assessments = assessments;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public List<Assessment> getAssessments() {
-        return this.assessments;
-    }
 }

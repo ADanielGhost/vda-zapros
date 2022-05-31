@@ -22,11 +22,11 @@ import org.springframework.stereotype.Component;
 public class CorrectingContradictionsServiceImpl implements CorrectingContradictionsService {
 
     @Override
-    public BuildingQesCheckResult correct(List<Answer> answerList, List<QuasiExpert> qes, QuasiExpertConfig config) {
+    public BuildingQesCheckResult correct(List<Answer> answerList, List<QuasiExpert> qes, QuasiExpertConfig config, List<Criteria> criteriaList) {
         int[][] matrixContradictions = calculateMatrixContradictions(qes, config);
-        Map<Assessment, Integer> mapContradictions = calculateMapContradictions(matrixContradictions, config.getCriteriaList());
+        Map<Assessment, Integer> mapContradictions = calculateMapContradictions(matrixContradictions, criteriaList);
         //displayContradictions(matrixContradictions, mapContradictions, config);
-        Answer answerForReplacing = findMostControversialAnswer(mapContradictions, answerList, qes, config.getCriteriaList());
+        Answer answerForReplacing = findMostControversialAnswer(mapContradictions, answerList, qes, criteriaList);
 
         BuildingQesCheckResult result = new BuildingQesCheckResult();
         result.setOver(false);
@@ -40,7 +40,7 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
         Map<Assessment, Integer> result = new HashMap<>();
 
         for (int i = 0; i < matrixContradictions.length; i++) {
-            result.put(Assessment.getById(i, criteriaList), Arrays.stream(matrixContradictions[i]).reduce(0, Integer::sum));
+            result.put(Assessment.getByOrderId(i, criteriaList), Arrays.stream(matrixContradictions[i]).reduce(0, Integer::sum));
         }
         return result;
     }
@@ -136,13 +136,13 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
         return result;
     }
 
-    private void displayContradictions(int[][] matrixContradictions, Map<Assessment, Integer> mapContradictions, QuasiExpertConfig config) {
+    private void displayContradictions(int[][] matrixContradictions, Map<Assessment, Integer> mapContradictions, QuasiExpertConfig config, List<Criteria> criteriaList) {
         System.out.println("Матрица противоречий: ");
         for (int i = 0; i < config.getLen(); i++) {
             for (int j = 0; j < config.getLen(); j++) {
                 System.out.print(matrixContradictions[i][j] + " ");
             }
-            System.out.println("-> " + mapContradictions.get(Assessment.getById(i, config.getCriteriaList())));
+            System.out.println("-> " + mapContradictions.get(Assessment.getByOrderId(i, criteriaList)));
         }
         System.out.println();
     }

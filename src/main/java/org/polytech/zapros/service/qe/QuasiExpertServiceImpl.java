@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.polytech.zapros.bean.Answer;
 import org.polytech.zapros.bean.BuildingQesCheckResult;
+import org.polytech.zapros.bean.Criteria;
 import org.polytech.zapros.bean.QuasiExpert;
 import org.polytech.zapros.bean.QuasiExpertConfig;
 import org.polytech.zapros.service.correcter.CorrectingContradictionsService;
@@ -22,15 +23,15 @@ public abstract class QuasiExpertServiceImpl implements QuasiExpertService {
     }
 
     @Override
-    public BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config) {
+    public BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config, List<Criteria> criteriaList) {
         List<QuasiExpert> result = buildNotCheckedQes(answerList, config);
 
         if (!validatingQesService.isQesValid(result, config)) {
-            return correctingContradictionsService.correct(answerList, result, config);
+            return correctingContradictionsService.correct(answerList, result, config, criteriaList);
         }
 
         for (QuasiExpert qe: result) {
-            qe.calculateRang(config.getCriteriaList());
+            qe.calculateRang(criteriaList);
         }
 
         return new BuildingQesCheckResult(true, result);
