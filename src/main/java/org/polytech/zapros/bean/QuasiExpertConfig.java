@@ -18,6 +18,8 @@ public class QuasiExpertConfig {
 
     private long id;
 
+    private MethodType methodType;
+
     /**
      * Длина матрицы квазиэксперта.
      * По сути - сумма количества оценок всех критерий.
