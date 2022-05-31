@@ -2,21 +2,19 @@ package org.polytech.zapros.bean;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
  * Bean для альтернативы.
  */
 @Getter
-@Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
 @ToString
 public class Alternative {
 
-    private long id;
+    private final long id;
 
     /**
      * Имя данной альтернативы.

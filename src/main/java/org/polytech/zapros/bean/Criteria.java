@@ -17,7 +17,7 @@ public class Criteria {
     /**
      * Уникальный номер.
      */
-    private long id;
+    private final long id;
 
     /**
      * Имя для данного критерия.
@@ -29,5 +29,5 @@ public class Criteria {
      */
     private final List<Assessment> assessments;
 
-    private final long orderId;
+    private final int orderId;
 }

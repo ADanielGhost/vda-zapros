@@ -22,7 +22,7 @@ public class Assessment {
     /**
      * Id критерия, которому она принадлежит.
      */
-    private final int criteriaId;
+    private final long criteriaId;
 
     /**
      * Ранг среди оценок одного критерия.
