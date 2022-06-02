@@ -2,6 +2,7 @@ package org.polytech.zapros.bean;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@AllArgsConstructor
 @RequiredArgsConstructor
 public class QuasiExpertConfig {
 
