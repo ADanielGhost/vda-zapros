@@ -40,7 +40,6 @@ public class Assessment {
      */
     private int orderId;
 
-    @Deprecated
     public static Assessment getByOrderId(int orderId, List<Criteria> criteriaList) {
         for (Criteria c: criteriaList) {
             for (Assessment a: c.getAssessments()) {

@@ -11,12 +11,12 @@ import org.polytech.zapros.bean.QuasiExpertConfig;
 public class ValidatingQesAraceService implements ValidatingQesService {
 
     @Override
-    public boolean isQesValid(List<QuasiExpert> qes, QuasiExpertConfig config) {
+    public boolean isQesValid(List<QuasiExpert> qes, QuasiExpertConfig config, Double threshold) {
         for (int i = 0; i < qes.size(); i++) {
             for (int j = i; j < qes.size(); j++) {
                 if (i == j) continue;
 
-                if (!isPairQesValid(qes.get(i), qes.get(j), config)) {
+                if (!isPairQesValid(qes.get(i), qes.get(j), config, threshold)) {
                     return false;
                 }
             }
@@ -33,7 +33,7 @@ public class ValidatingQesAraceService implements ValidatingQesService {
      * <p>
      * {@code false}, если необходимо устранить противоречия.
      */
-    private boolean isPairQesValid(QuasiExpert qeI, QuasiExpert qeJ, QuasiExpertConfig config) {
+    private boolean isPairQesValid(QuasiExpert qeI, QuasiExpert qeJ, QuasiExpertConfig config, Double threshold) {
         int maxNumOfDiscrepancies = calculateMaxNumOfDiscrepancies(qeI.getMatrix(), qeJ.getMatrix(), config);
         int difference = calculateDifference(qeI.getMatrix(), qeJ.getMatrix(), config);
 
@@ -44,7 +44,7 @@ public class ValidatingQesAraceService implements ValidatingQesService {
 //        System.out.println();
 
         // TODO возвращать double
-        return (double) difference/maxNumOfDiscrepancies < config.getThreshold();
+        return (double) difference/maxNumOfDiscrepancies < threshold;
     }
 
     /**

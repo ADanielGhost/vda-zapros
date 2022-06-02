@@ -38,8 +38,8 @@ public abstract class VdaZaprosServiceImpl implements VdaZaprosService {
     }
 
     @Override
-    public BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config, List<Criteria> criteriaList) {
-        return quasiExpertService.buildQes(answerList, config, criteriaList);
+    public BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config, List<Criteria> criteriaList, Double threshold) {
+        return quasiExpertService.buildQes(answerList, config, criteriaList, threshold);
     }
 
     @Override

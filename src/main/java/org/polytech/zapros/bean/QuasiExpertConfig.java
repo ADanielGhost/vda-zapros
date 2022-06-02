@@ -18,8 +18,6 @@ public class QuasiExpertConfig {
 
     private long id;
 
-    private MethodType methodType;
-
     /**
      * Длина матрицы квазиэксперта.
      * По сути - сумма количества оценок всех критерий.
@@ -28,11 +26,6 @@ public class QuasiExpertConfig {
      * {@code len = 9}.
      */
     private final int len;
-
-    /**
-     * Порог для противоречий квазиэкспертов
-     */
-    private final double threshold;
 
     /**
      * Вспомогательная структура, хранящая границы оценок для квазиэксперта

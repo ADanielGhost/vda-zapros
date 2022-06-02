@@ -17,5 +17,5 @@ public interface QuasiExpertService {
     /**
      * Смотри {@link org.polytech.zapros.service.main.VdaZaprosService#buildQes}
      */
-    BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config, List<Criteria> criteriaList);
+    BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config, List<Criteria> criteriaList, Double threshold);
 }

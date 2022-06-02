@@ -8,12 +8,12 @@ import org.polytech.zapros.bean.QuasiExpertConfig;
 
 public class QuasiExpertConfigInitUtils {
 
-    public static QuasiExpertConfig init(List<Criteria> criteriaList, Double threshold) {
+    public static QuasiExpertConfig init(List<Criteria> criteriaList) {
         int len = calculateLen(criteriaList);
         List<Integer> indexes = calculateIndexes(criteriaList);
         int[][] initData = calculateInitData(len, criteriaList);
 
-        return new QuasiExpertConfig(len, threshold, indexes, initData);
+        return new QuasiExpertConfig(len, indexes, initData);
     }
 
     private static int calculateLen(List<Criteria> criteriaList) {

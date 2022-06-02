@@ -37,7 +37,7 @@ public interface VdaZaprosService {
      * @param config конфиг квазиэксперта.
      * @return структуру, содержащую либо построенных квазиэкспертов, либо ответ для исправления противоречий.
      */
-    BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config, List<Criteria> criteriaList);
+    BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config, List<Criteria> criteriaList, Double threshold);
 
     /**
      * Метод для замены ответа пользователя. Используется при исправлении противоречий.

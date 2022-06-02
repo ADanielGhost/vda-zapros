@@ -23,10 +23,10 @@ public abstract class QuasiExpertServiceImpl implements QuasiExpertService {
     }
 
     @Override
-    public BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config, List<Criteria> criteriaList) {
+    public BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config, List<Criteria> criteriaList, Double threshold) {
         List<QuasiExpert> result = buildNotCheckedQes(answerList, config);
 
-        if (!validatingQesService.isQesValid(result, config)) {
+        if (!validatingQesService.isQesValid(result, config, threshold)) {
             return correctingContradictionsService.correct(answerList, result, config, criteriaList);
         }
 

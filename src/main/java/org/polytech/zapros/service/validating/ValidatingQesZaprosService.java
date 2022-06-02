@@ -11,7 +11,7 @@ import org.polytech.zapros.bean.QuasiExpertConfig;
 public class ValidatingQesZaprosService implements ValidatingQesService {
 
     @Override
-    public boolean isQesValid(List<QuasiExpert> qes, QuasiExpertConfig config) {
+    public boolean isQesValid(List<QuasiExpert> qes, QuasiExpertConfig config, Double threshold) {
         return qes.size() == 1;
     }
 }

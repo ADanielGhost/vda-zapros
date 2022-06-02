@@ -17,5 +17,5 @@ public interface ValidatingQesService {
      * @return true, если все в порядке и можно ранжировать альтернативы и
      * false, если необходимо устранить противоречия.
      */
-    boolean isQesValid(List<QuasiExpert> qes, QuasiExpertConfig config);
+    boolean isQesValid(List<QuasiExpert> qes, QuasiExpertConfig config, Double threshold);
 }
