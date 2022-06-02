@@ -24,6 +24,17 @@ public abstract class QuasiExpertServiceImpl implements QuasiExpertService {
 
     @Override
     public BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config, List<Criteria> criteriaList, Double threshold) {
+        System.out.println("!!! QuasiExpertServiceImpl + data:");
+        System.out.println();
+        answerList.forEach(System.out::println);
+        System.out.println();
+        System.out.println(config);
+        System.out.println();
+        criteriaList.forEach(System.out::println);
+        System.out.println();
+        System.out.println(threshold);
+        System.out.println();
+        System.out.println("!!! END of DATA!!!");
         List<QuasiExpert> result = buildNotCheckedQes(answerList, config);
 
         if (!validatingQesService.isQesValid(result, config, threshold)) {

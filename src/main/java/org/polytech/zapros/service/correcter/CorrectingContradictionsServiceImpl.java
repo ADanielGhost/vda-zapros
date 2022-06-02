@@ -25,7 +25,7 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
     public BuildingQesCheckResult correct(List<Answer> answerList, List<QuasiExpert> qes, QuasiExpertConfig config, List<Criteria> criteriaList) {
         int[][] matrixContradictions = calculateMatrixContradictions(qes, config);
         Map<Assessment, Integer> mapContradictions = calculateMapContradictions(matrixContradictions, criteriaList);
-        //displayContradictions(matrixContradictions, mapContradictions, config);
+        displayContradictions(matrixContradictions, mapContradictions, config, criteriaList);
         Answer answerForReplacing = findMostControversialAnswer(mapContradictions, answerList, qes, criteriaList);
 
         BuildingQesCheckResult result = new BuildingQesCheckResult();

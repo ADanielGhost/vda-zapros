@@ -1,6 +1,7 @@
 package org.polytech.zapros.bean;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 // TODO rename
 public class SuggestedAnswer {
@@ -21,5 +22,13 @@ public class SuggestedAnswer {
 
     public void setJ(List<Assessment> j) {
         this.j = j;
+    }
+
+    @Override
+    public String toString() {
+        return "SuggestedAnswer{" +
+            "assessmentI=" + i +
+            ",assessmentJs:=" + j.stream().map(String::valueOf).collect(Collectors.joining(";")) +
+            '}';
     }
 }

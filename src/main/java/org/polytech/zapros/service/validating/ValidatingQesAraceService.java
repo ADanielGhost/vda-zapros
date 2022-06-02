@@ -12,6 +12,8 @@ public class ValidatingQesAraceService implements ValidatingQesService {
 
     @Override
     public boolean isQesValid(List<QuasiExpert> qes, QuasiExpertConfig config, Double threshold) {
+        if (threshold == null) throw new IllegalArgumentException("threshold CANNOT BE NULL HERE!!!");
+
         for (int i = 0; i < qes.size(); i++) {
             for (int j = i; j < qes.size(); j++) {
                 if (i == j) continue;

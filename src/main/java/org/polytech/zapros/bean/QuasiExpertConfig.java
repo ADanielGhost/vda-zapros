@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Конфиг для всех квазиэкспертов.
@@ -16,6 +17,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
+@ToString
 public class QuasiExpertConfig {
 
     private long id;
