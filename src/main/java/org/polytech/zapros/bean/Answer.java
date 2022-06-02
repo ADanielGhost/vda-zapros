@@ -2,6 +2,7 @@ package org.polytech.zapros.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -10,7 +11,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Answer {
 
     public enum AnswerType { BETTER, WORSE, EQUAL }
@@ -18,10 +19,17 @@ public class Answer {
     public enum AnswerAuthor { USER, TRANSIENT, REPLACED }
 
     private long id;
-    private final Assessment i;
-    private final Assessment j;
-    private final AnswerType answerType;
-    private final AnswerAuthor answerAuthor;
+    private Assessment i;
+    private Assessment j;
+    private AnswerType answerType;
+    private AnswerAuthor answerAuthor;
+
+    public Answer(Assessment i, Assessment j, AnswerType answerType, AnswerAuthor answerAuthor) {
+        this.i = i;
+        this.j = j;
+        this.answerType = answerType;
+        this.answerAuthor = answerAuthor;
+    }
 
     public int getIAsId() {
         return i.getOrderId();
