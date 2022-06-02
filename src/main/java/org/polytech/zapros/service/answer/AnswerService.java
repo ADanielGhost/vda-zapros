@@ -23,7 +23,7 @@ public interface AnswerService {
     /**
      * Смотри {@link org.polytech.zapros.service.main.VdaZaprosService#addAnswer}
      */
-    AnswerCheckResult addAnswer(AnswerCheckResult checkResult, Answer.AnswerType answerType, QuasiExpertConfig config);
+    AnswerCheckResult addAnswer(AnswerCheckResult checkResult, Answer.AnswerType answerType);
 
     /**
      * Смотри {@link org.polytech.zapros.service.main.VdaZaprosService#replaceAnswer}

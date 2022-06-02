@@ -29,7 +29,7 @@ public interface VdaZaprosService {
      * @param config конфиг квазиэксперта.
      * @return структуру, содержащую ответы пользователя и указатели на сравниваемые оценки.
      */
-    AnswerCheckResult addAnswer(AnswerCheckResult checkResult, AnswerType answerType, QuasiExpertConfig config);
+    AnswerCheckResult addAnswer(AnswerCheckResult checkResult, AnswerType answerType);
 
     /**
      * Метод для построения квазиэкспертов исходя из оценок пользователя.

@@ -33,8 +33,8 @@ public abstract class VdaZaprosServiceImpl implements VdaZaprosService {
     }
 
     @Override
-    public final AnswerCheckResult addAnswer(AnswerCheckResult checkResult, AnswerType answerType, QuasiExpertConfig config) {
-        return answerService.addAnswer(checkResult, answerType, config);
+    public final AnswerCheckResult addAnswer(AnswerCheckResult checkResult, AnswerType answerType) {
+        return answerService.addAnswer(checkResult, answerType);
     }
 
     @Override

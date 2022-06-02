@@ -32,7 +32,7 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public AnswerCheckResult addAnswer(AnswerCheckResult checkResult, AnswerType answerType, QuasiExpertConfig config) {
+    public AnswerCheckResult addAnswer(AnswerCheckResult checkResult, AnswerType answerType) {
 
         int pCriteriaI = checkResult.getPCriteriaI();
         int pCriteriaJ = checkResult.getPCriteriaJ();
