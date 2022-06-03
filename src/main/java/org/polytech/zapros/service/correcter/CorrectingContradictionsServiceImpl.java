@@ -80,9 +80,13 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
 
+        log.info("!!! wrongAnswerList");
+        wrongAnswerList.forEach(x -> log.info("!! x -> " + x));
         for (Assessment second: suggestedAnswer.getJ()) {
             Optional<Answer> answer = wrongAnswerList.stream()
+                .peek(x -> log.info("!! wr: " + x.getI() + " " + first + " " + x.getJ() + " " + second))
                 .filter(x -> (x.getI() == first && x.getJ() == second) || (x.getI() == second && x.getJ() == first))
+                .peek(x -> log.info("!! left: " + x))
                 .filter(x -> x.getAnswerAuthor() != AnswerAuthor.REPLACED)
                 .findFirst();
 
