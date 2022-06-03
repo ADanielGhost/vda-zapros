@@ -8,6 +8,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.polytech.zapros.bean.Answer;
 import org.polytech.zapros.bean.Answer.AnswerAuthor;
 import org.polytech.zapros.bean.Assessment;
@@ -21,8 +23,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class CorrectingContradictionsServiceImpl implements CorrectingContradictionsService {
 
+    private final Log log = LogFactory.getLog(this.getClass());
+
     @Override
     public BuildingQesCheckResult correct(List<Answer> answerList, List<QuasiExpert> qes, QuasiExpertConfig config, List<Criteria> criteriaList) {
+        log.info("!!! start correct!");
         int[][] matrixContradictions = calculateMatrixContradictions(qes, config);
         Map<Assessment, Integer> mapContradictions = calculateMapContradictions(matrixContradictions, criteriaList);
         displayContradictions(matrixContradictions, mapContradictions, config, criteriaList);
@@ -68,7 +73,7 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
 
         SuggestedAnswer suggestedAnswer = findMax(mapContradictions);
         Assessment first = suggestedAnswer.getI();
-        System.out.println(suggestedAnswer);
+        log.info("!!! " + suggestedAnswer);
 
         List<Answer> wrongAnswerList = qes.stream()
             .map(QuasiExpert::getFirstAnswer)
@@ -135,8 +140,18 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
         result.setJ(listSecondMostValues);
         return result;
     }
-
     private void displayContradictions(int[][] matrixContradictions, Map<Assessment, Integer> mapContradictions, QuasiExpertConfig config, List<Criteria> criteriaList) {
+        log.info("Матрица противоречий: ");
+        for (int i = 0; i < config.getLen(); i++) {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < config.getLen(); j++) {
+                sb.append(matrixContradictions[i][j]).append(" ");
+            }
+            log.info(sb + "-> " + mapContradictions.get(Assessment.getByOrderId(i, criteriaList)));
+        }
+        log.info("!!!");
+    }
+    private void displayContradictionsOld(int[][] matrixContradictions, Map<Assessment, Integer> mapContradictions, QuasiExpertConfig config, List<Criteria> criteriaList) {
         System.out.println("Матрица противоречий: ");
         for (int i = 0; i < config.getLen(); i++) {
             for (int j = 0; j < config.getLen(); j++) {
