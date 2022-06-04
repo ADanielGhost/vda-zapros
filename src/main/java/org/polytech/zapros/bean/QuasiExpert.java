@@ -120,9 +120,9 @@ public class QuasiExpert {
         return this.ranks;
     }
 
-    public Map<Assessment, Integer> getOrderedRanks() {
-        return orderedRanks;
-    }
+//    public Map<Assessment, Integer> getOrderedRanks() {
+//        return orderedRanks;
+//    }
 
     // TODO service
     /**

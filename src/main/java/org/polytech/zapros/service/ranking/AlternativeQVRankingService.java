@@ -24,84 +24,9 @@ import org.polytech.zapros.comparator.AlternativeRelativeRanksQVComparator;
 @Component
 public class AlternativeQVRankingService implements AlternativeRankingService {
 
-    private List<QuasiExpertQV> getRanksRED(List<QuasiExpert> qes, List<Criteria> criteriaList) {
-        List<QuasiExpertQV> result = new ArrayList<>();
-
-        for (QuasiExpert quasiExpert: qes) {
-            Map<Assessment, Integer> weights = new HashMap<>();
-            for (Assessment key: quasiExpert.getOrderedRanks().keySet()) {
-                if (quasiExpert.getOrderedRanks().get(key) != 0) {
-                    weights.put(key, quasiExpert.getOrderedRanks().get(key));
-                }
-            }
-
-            List<Entry<Assessment, Integer>> entries = new ArrayList<>(weights.entrySet());
-            entries.sort((e1, e2) -> {
-                Integer v1 = e1.getValue();
-                Integer v2 = e2.getValue();
-                return v2.compareTo(v1);
-            });
-
-            int cur = 1;
-            for (int i = 0; i < entries.size() - 1; i++) {
-                int oldValue = entries.get(i).getValue();
-                entries.get(i).setValue(cur);
-                if (entries.get(i + 1).getValue().compareTo(oldValue) != 0) {
-                    cur++;
-                }
-            }
-            entries.get(entries.size() - 1).setValue(cur);
-
-            Map<QualityVariation, Integer> qvMap = new HashMap<>();
-
-            for (Criteria criteria: criteriaList) {
-                for (int i = 0; i < criteria.getAssessments().size(); i++) {
-                    int weight = 0;
-                    for (int j = i; j < criteria.getAssessments().size(); j++) {
-                        if (i == j) continue;
-
-                        weight += weights.get(criteria.getAssessments().get(j));
-                        QualityVariation qualityVariation = new QualityVariation(
-                            criteria.getAssessments().get(i),
-                            criteria.getAssessments().get(j)
-                        );
-                        qvMap.put(qualityVariation, weight);
-                    }
-                }
-            }
-
-            List<Entry<QualityVariation, Integer>> entries1 = new ArrayList<>(qvMap.entrySet());
-            entries1.sort((e1, e2) -> {
-                Integer v1 = e1.getValue();
-                Integer v2 = e2.getValue();
-                return v2.compareTo(v1);
-            });
-
-            int cur1 = 1;
-            for (int i = 0; i < entries1.size() - 1; i++) {
-                int oldValue = entries1.get(i).getValue();
-                entries1.get(i).setValue(cur1);
-                if (entries1.get(i + 1).getValue().compareTo(oldValue) != 0) {
-                    cur1++;
-                }
-            }
-            entries1.get(entries1.size() - 1).setValue(cur1);
-            Map<QualityVariation, Integer> collect = entries1.stream().collect(
-                Collectors.toMap(Entry::getKey, Entry::getValue)
-            );
-
-            QuasiExpertQV quasiExpertQV = new QuasiExpertQV();
-            quasiExpertQV.setQuasiExpert(quasiExpert);
-            quasiExpertQV.setQualityVariationMap(collect);
-            result.add(quasiExpertQV);
-        }
-
-        return result;
-    }
-
     private List<QuasiExpertQV> getRanksBLUE(List<QuasiExpert> qes, List<Criteria> criteriaList) {
         qes.forEach(x -> {
-            x.getOrderedRanks().forEach((k,v) -> System.out.println(k.getName() + " " + v));
+            x.getRanks().forEach((k,v) -> System.out.println(k.getName() + " " + v));
             System.out.println();
         });
 
@@ -118,7 +43,7 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
                         if (i == j) continue;
 
                         QualityVariation qualityVariation = new QualityVariation(list.get(i), list.get(j));
-                        map.put(qualityVariation, quasiExpert.getOrderedRanks().get(list.get(j)) - quasiExpert.getOrderedRanks().get(list.get(i)));
+                        map.put(qualityVariation, quasiExpert.getRanks().get(list.get(j)) - quasiExpert.getRanks().get(list.get(i)));
                     }
                 }
             }
@@ -135,7 +60,6 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
     @Override
     public List<AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config) {
         List<QuasiExpertQV> qeqvs = getRanksBLUE(qes, criteriaList);
-        //List<QuasiExpertQV> qeqvs = getRanksRED(qes, criteriaList);
 
         List<AlternativeResult> result = alternativeList.stream()
             .map(alternative -> {

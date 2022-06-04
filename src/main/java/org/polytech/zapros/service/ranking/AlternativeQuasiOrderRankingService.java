@@ -80,9 +80,9 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
 
         for (QuasiExpert quasiExpert: qes) {
             List<Integer> localRanks = new ArrayList<>();
-            for (Assessment assessment: quasiExpert.getOrderedRanks().keySet()) {
+            for (Assessment assessment: quasiExpert.getRanks().keySet()) {
                 if (alternative.getAssessments().contains(assessment)) {
-                    localRanks.add(quasiExpert.getOrderedRanks().get(assessment));
+                    localRanks.add(quasiExpert.getRanks().get(assessment));
                 }
             }
 
