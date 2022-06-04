@@ -15,7 +15,7 @@ public class QuasiExpert {
     /**
      * Матрица данного квазиэксперта.
      */
-    private final int[][] matrix;
+    private int[][] matrix;
 
     private Answer firstAnswer;
 
@@ -28,7 +28,7 @@ public class QuasiExpert {
     /**
      * Конфиг для квазиэксперта.
      */
-    private final QuasiExpertConfig quasiExpertConfig;
+    private QuasiExpertConfig quasiExpertConfig;
 
     public QuasiExpert(QuasiExpertConfig quasiExpertConfig) {
         this.quasiExpertConfig = quasiExpertConfig;
@@ -99,6 +99,13 @@ public class QuasiExpert {
 
     public int[][] getMatrix() {
         return matrix;
+    }
+
+    public QuasiExpert() {
+    }
+
+    public void setRanks(Map<Assessment, Integer> ranks) {
+        this.ranks = ranks;
     }
 
     public Answer getFirstAnswer() {
