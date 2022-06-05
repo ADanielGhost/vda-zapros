@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Component;
-
 import org.polytech.zapros.bean.Answer;
 import org.polytech.zapros.bean.Answer.AnswerAuthor;
 import org.polytech.zapros.bean.Answer.AnswerType;
@@ -13,7 +11,7 @@ import org.polytech.zapros.bean.AnswerCheckResult;
 import org.polytech.zapros.bean.Assessment;
 import org.polytech.zapros.bean.BuildingQesCheckResult;
 import org.polytech.zapros.bean.Criteria;
-import org.polytech.zapros.bean.QuasiExpertConfig;
+import org.springframework.stereotype.Component;
 
 @Component
 public class AnswerServiceImpl implements AnswerService {

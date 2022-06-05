@@ -27,10 +27,11 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
 
     @Override
     public BuildingQesCheckResult correct(List<Answer> answerList, List<QuasiExpert> qes, QuasiExpertConfig config, List<Criteria> criteriaList) {
-        log.info("!!! start correct!");
+        log.info("correcting started");
+
         int[][] matrixContradictions = calculateMatrixContradictions(qes, config);
         Map<Assessment, Integer> mapContradictions = calculateMapContradictions(matrixContradictions, criteriaList);
-        displayContradictions(matrixContradictions, mapContradictions, config, criteriaList);
+        //displayContradictions(matrixContradictions, mapContradictions, config, criteriaList);
         Answer answerForReplacing = findMostControversialAnswer(mapContradictions, answerList, qes, criteriaList);
 
         BuildingQesCheckResult result = new BuildingQesCheckResult();
@@ -38,6 +39,7 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
         result.setAnswerForReplacing(answerForReplacing);
         result.setAnswerList(answerList);
 
+        log.info("correcting finished with " + answerForReplacing);
         return result;
     }
 
@@ -73,19 +75,15 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
 
         SuggestedAnswer suggestedAnswer = findMax(mapContradictions);
         Assessment first = suggestedAnswer.getI();
-        log.info("!!! " + suggestedAnswer);
 
         List<Answer> wrongAnswerList = qes.stream()
             .map(QuasiExpert::getFirstAnswer)
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
 
-        log.info("!!! wrongAnswerList");
-        wrongAnswerList.forEach(x -> log.info("!! x -> " + x));
         for (Assessment second: suggestedAnswer.getJ()) {
             Optional<Answer> answer = wrongAnswerList.stream()
                 .filter(x -> (x.getI().equals(first) && x.getJ().equals(second)) || (x.getI().equals(second) && x.getJ().equals(first)))
-                .peek(x -> log.info("!! left: " + x))
                 .filter(x -> x.getAnswerAuthor() != AnswerAuthor.REPLACED)
                 .findFirst();
 
@@ -142,6 +140,7 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
         result.setJ(listSecondMostValues);
         return result;
     }
+
     private void displayContradictions(int[][] matrixContradictions, Map<Assessment, Integer> mapContradictions, QuasiExpertConfig config, List<Criteria> criteriaList) {
         log.info("Матрица противоречий: ");
         for (int i = 0; i < config.getLen(); i++) {
@@ -160,6 +159,6 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
             }
         }
         // невозможный кейс
-        throw new IllegalStateException("Assessment.getAssessmentByOrderId failed");
+        throw new IllegalStateException("!!! getAssessmentByOrderId failed");
     }
 }

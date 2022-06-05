@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 
 import org.polytech.zapros.bean.Alternative;
@@ -23,6 +25,8 @@ import org.polytech.zapros.comparator.AlternativeRelativeRanksQVComparator;
 
 @Component
 public class AlternativeQVRankingService implements AlternativeRankingService {
+
+    private final Log log = LogFactory.getLog(this.getClass());
 
     private List<QuasiExpertQV> getRanksBLUE(List<QuasiExpert> qes, List<Criteria> criteriaList) {
         qes.forEach(x -> {
@@ -59,6 +63,7 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
 
     @Override
     public List<AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config) {
+        log.info("rankAlternatives started");
         List<QuasiExpertQV> qeqvs = getRanksBLUE(qes, criteriaList);
 
         List<AlternativeResult> result = alternativeList.stream()
@@ -75,6 +80,7 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
         }
         setFinalRank(result);
 
+        log.info("rankAlternatives finished");
         return result;
     }
 

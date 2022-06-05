@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.polytech.zapros.bean.Answer;
 import org.polytech.zapros.bean.Assessment;
 import org.polytech.zapros.bean.BuildingQesCheckResult;
@@ -17,6 +19,8 @@ import org.polytech.zapros.service.validating.ValidatingQesService;
 
 public abstract class QuasiExpertServiceImpl implements QuasiExpertService {
 
+    private final Log log = LogFactory.getLog(this.getClass());
+
     private final ValidatingQesService validatingQesService;
     private final CorrectingContradictionsService correctingContradictionsService;
 
@@ -27,6 +31,7 @@ public abstract class QuasiExpertServiceImpl implements QuasiExpertService {
 
     @Override
     public BuildingQesCheckResult buildQes(List<Answer> answerList, QuasiExpertConfig config, List<Criteria> criteriaList, Double threshold) {
+        log.info("buildQes started");
         List<QuasiExpert> result = buildNotCheckedQes(answerList, config);
 
         if (!validatingQesService.isQesValid(result, config, threshold)) {
@@ -35,6 +40,7 @@ public abstract class QuasiExpertServiceImpl implements QuasiExpertService {
 
         result.forEach(x -> calculateRang(x, criteriaList, config));
 
+        log.info("buildQes ended with qe: " + result.size());
         return new BuildingQesCheckResult(true, result);
     }
 
