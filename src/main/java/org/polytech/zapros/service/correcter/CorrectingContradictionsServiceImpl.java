@@ -45,7 +45,7 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
         Map<Assessment, Integer> result = new HashMap<>();
 
         for (int i = 0; i < matrixContradictions.length; i++) {
-            result.put(Assessment.getByOrderId(i, criteriaList), Arrays.stream(matrixContradictions[i]).reduce(0, Integer::sum));
+            result.put(getAssessmentByOrderId(i, criteriaList), Arrays.stream(matrixContradictions[i]).reduce(0, Integer::sum));
         }
         return result;
     }
@@ -106,8 +106,7 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
             }
         }
 
-        // TODO сказать, что оч много исправлений
-        throw new IllegalStateException();
+        throw new IllegalStateException("CANNOT FIND ANSWER FOR REPLACE!!!");
     }
 
     private SuggestedAnswer findMax(Map<Assessment, Integer> mapContradictions) {
@@ -151,9 +150,18 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
             for (int j = 0; j < config.getLen(); j++) {
                 sb.append(matrixContradictions[i][j]).append(" ");
             }
-            log.info(sb + "-> " + mapContradictions.get(Assessment.getByOrderId(i, criteriaList)));
+            log.info(sb + "-> " + mapContradictions.get(getAssessmentByOrderId(i, criteriaList)));
         }
         log.info("!!!");
+    }
+    public Assessment getAssessmentByOrderId(int orderId, List<Criteria> criteriaList) {
+        for (Criteria c: criteriaList) {
+            for (Assessment a: c.getAssessments()) {
+                if (orderId == a.getOrderId()) return a;
+            }
+        }
+        // невозможный кейс
+        throw new IllegalStateException("Assessment.getAssessmentByOrderId failed");
     }
     private void displayContradictionsOld(int[][] matrixContradictions, Map<Assessment, Integer> mapContradictions, QuasiExpertConfig config, List<Criteria> criteriaList) {
         System.out.println("Матрица противоречий: ");
@@ -161,7 +169,7 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
             for (int j = 0; j < config.getLen(); j++) {
                 System.out.print(matrixContradictions[i][j] + " ");
             }
-            System.out.println("-> " + mapContradictions.get(Assessment.getByOrderId(i, criteriaList)));
+            System.out.println("-> " + mapContradictions.get(getAssessmentByOrderId(i, criteriaList)));
         }
         System.out.println();
     }

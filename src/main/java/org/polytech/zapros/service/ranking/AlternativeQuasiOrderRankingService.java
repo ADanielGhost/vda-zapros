@@ -28,7 +28,6 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
                 AlternativeResult alternativeResult = new AlternativeResult();
                 alternativeResult.setAlternative(alternative);
                 alternativeResult.setRelativeRanks(new HashMap<>());
-                // TODO ORDERED RANKS? ARACE?
                 alternativeResult.setAssessmentsRanks(getQeOrderedRanks(alternative, qes));
                 return alternativeResult;
             })

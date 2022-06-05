@@ -31,13 +31,6 @@ public class Answer {
         this.answerAuthor = answerAuthor;
     }
 
-    public int getIAsId() {
-        return i.getOrderId();
-    }
-    public int getJAsId() {
-        return j.getOrderId();
-    }
-
     @Override
     public String toString() {
         return "Answer{" +

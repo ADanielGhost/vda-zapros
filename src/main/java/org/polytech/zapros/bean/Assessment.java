@@ -1,7 +1,5 @@
 package org.polytech.zapros.bean;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +13,6 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Assessment {
 
     private long id;
@@ -39,14 +36,4 @@ public class Assessment {
      * Уникальный номер.
      */
     private int orderId;
-
-    public static Assessment getByOrderId(int orderId, List<Criteria> criteriaList) {
-        for (Criteria c: criteriaList) {
-            for (Assessment a: c.getAssessments()) {
-                if (orderId == a.getOrderId()) return a;
-            }
-        }
-        // невозможный кейс
-        throw new IllegalStateException("Assessment.getByOrderId failed");
-    }
 }

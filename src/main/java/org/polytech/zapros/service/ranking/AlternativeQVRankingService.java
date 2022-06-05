@@ -26,7 +26,7 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
 
     private List<QuasiExpertQV> getRanksBLUE(List<QuasiExpert> qes, List<Criteria> criteriaList) {
         qes.forEach(x -> {
-            x.getRanks().forEach((k,v) -> System.out.println(k.getName() + " " + v));
+            x.getRanks().forEach((k, v) -> System.out.println(k.getName() + " " + v));
             System.out.println();
         });
 

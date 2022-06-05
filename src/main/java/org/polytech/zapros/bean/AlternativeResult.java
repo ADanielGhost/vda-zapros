@@ -42,6 +42,5 @@ public class AlternativeResult {
     private Integer finalRank;
 
     // TODO костыли
-    @Deprecated
     private Map<QuasiExpertQV, Integer> relativeQVRanks;
 }
