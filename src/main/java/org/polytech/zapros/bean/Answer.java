@@ -34,7 +34,8 @@ public class Answer {
     @Override
     public String toString() {
         return "Answer{" +
-            "i=" + i.getName() + ":" + i.getOrderId() +
+            "id=" + id +
+            ", i=" + i.getName() + ":" + i.getOrderId() +
             ", j=" + j.getName() + ":" + j.getOrderId() +
             ", answerType=" + answerType +
             ", answerAuthor=" + answerAuthor +
