@@ -15,7 +15,7 @@ public class BuildingQesCheckResult {
 
     private long id;
     private boolean isOver;
-    private List<QuasiExpert> qes;
+    private transient List<QuasiExpert> qes;
     private Answer answerForReplacing;
     private List<Answer> answerList;
 
