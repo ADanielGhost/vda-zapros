@@ -11,6 +11,7 @@ import org.polytech.zapros.bean.BuildingQesCheckResult;
 import org.polytech.zapros.bean.Criteria;
 import org.polytech.zapros.bean.QuasiExpert;
 import org.polytech.zapros.bean.QuasiExpertConfig;
+import org.polytech.zapros.bean.ReplacedAnswer;
 
 /**
  * Интерфейс сервиса для взаимодействия с клиентом.
@@ -45,7 +46,7 @@ public interface VdaZaprosService {
      * @param answerType - ответ пользователя для исправления оценки из checkResult.
      * @return лист ответов с исправленным противоречием.
      */
-    List<Answer> replaceAnswer(BuildingQesCheckResult checkResult, AnswerType answerType);
+    ReplacedAnswer replaceAnswer(BuildingQesCheckResult checkResult, AnswerType answerType);
 
     /**
      * Метод для ранжирования альтернатив на основе постоенных квазиэкспертов.

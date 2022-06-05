@@ -7,6 +7,7 @@ import org.polytech.zapros.bean.AnswerCheckResult;
 import org.polytech.zapros.bean.BuildingQesCheckResult;
 import org.polytech.zapros.bean.Criteria;
 import org.polytech.zapros.bean.QuasiExpertConfig;
+import org.polytech.zapros.bean.ReplacedAnswer;
 
 /**
  * Сервис для работы с ответами.
@@ -28,5 +29,5 @@ public interface AnswerService {
     /**
      * Смотри {@link org.polytech.zapros.service.main.VdaZaprosService#replaceAnswer}
      */
-    List<Answer> replaceAnswer(BuildingQesCheckResult checkResult, Answer.AnswerType answerType);
+    ReplacedAnswer replaceAnswer(BuildingQesCheckResult checkResult, Answer.AnswerType answerType);
 }

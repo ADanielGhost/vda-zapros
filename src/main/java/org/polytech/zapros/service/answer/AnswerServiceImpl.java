@@ -11,6 +11,7 @@ import org.polytech.zapros.bean.AnswerCheckResult;
 import org.polytech.zapros.bean.Assessment;
 import org.polytech.zapros.bean.BuildingQesCheckResult;
 import org.polytech.zapros.bean.Criteria;
+import org.polytech.zapros.bean.ReplacedAnswer;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -107,13 +108,20 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public List<Answer> replaceAnswer(BuildingQesCheckResult checkResult, AnswerType answerType) {
+    public ReplacedAnswer replaceAnswer(BuildingQesCheckResult checkResult, AnswerType answerType) {
         List<Answer> answerList = checkResult.getAnswerList();
         Answer wrongAnswer = checkResult.getAnswerForReplacing();
         Answer newAnswer = new Answer(wrongAnswer.getI(), wrongAnswer.getJ(), answerType, AnswerAuthor.REPLACED);
 
-        return answerList.stream()
+        List<Answer> newAnswers = answerList.stream()
             .map(x -> x.equals(wrongAnswer) ? newAnswer : x)
             .collect(Collectors.toList());
+
+        ReplacedAnswer result = new ReplacedAnswer();
+        result.setReplacedAnswer(wrongAnswer);
+        result.setNewAnswer(newAnswer);
+        result.setNewAnswers(newAnswers);
+
+        return result;
     }
 }
