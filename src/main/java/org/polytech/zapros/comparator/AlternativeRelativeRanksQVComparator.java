@@ -21,9 +21,6 @@ public class AlternativeRelativeRanksQVComparator implements Comparator<Alternat
         List<Assessment> assessmentList1 = new ArrayList<>(o1.getAlternative().getAssessments());
         List<Assessment> assessmentList2 = new ArrayList<>(o2.getAlternative().getAssessments());
 
-        //assessmentList1.sort((Comparator.comparingInt(Assessment::getCriteriaId)));
-        //assessmentList2.sort((Comparator.comparingInt(Assessment::getCriteriaId)));
-
         List<Integer> qvRanks1 = new ArrayList<>();
         List<Integer> qvRanks2 = new ArrayList<>();
 
@@ -37,18 +34,12 @@ public class AlternativeRelativeRanksQVComparator implements Comparator<Alternat
                 continue;
             }
 
-            System.out.println("COMPARE!!!");
-            System.out.println(assessment1);
-            System.out.println(assessment2);
-            System.out.println();
             Integer value = quasiExpertQV.getQualityVariationMap().entrySet().stream()
-                .peek(x -> System.out.println("qe -> " + x.getKey().getI() + " " + x.getKey().getJ().getName()))
                 .filter(x -> ((x.getKey().getI().equals(assessment1) && x.getKey().getJ().equals(assessment2)) ||
                     (x.getKey().getI().equals(assessment2) && x.getKey().getJ().equals(assessment1))))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new)
                 .getValue();
-            System.out.println();
 
             if (assessment1.getRank() < assessment2.getRank()) {
                 qvRanks1.add(0);
