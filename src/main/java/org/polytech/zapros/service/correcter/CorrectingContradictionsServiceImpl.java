@@ -84,8 +84,7 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
         wrongAnswerList.forEach(x -> log.info("!! x -> " + x));
         for (Assessment second: suggestedAnswer.getJ()) {
             Optional<Answer> answer = wrongAnswerList.stream()
-                .peek(x -> log.info("!! wr: " + x.getI() + " " + first + " " + x.getJ() + " " + second))
-                .filter(x -> (x.getI() == first && x.getJ() == second) || (x.getI() == second && x.getJ() == first))
+                .filter(x -> (x.getI().equals(first) && x.getJ().equals(second)) || (x.getI().equals(second) && x.getJ().equals(first)))
                 .peek(x -> log.info("!! left: " + x))
                 .filter(x -> x.getAnswerAuthor() != AnswerAuthor.REPLACED)
                 .findFirst();
@@ -162,15 +161,5 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
         }
         // невозможный кейс
         throw new IllegalStateException("Assessment.getAssessmentByOrderId failed");
-    }
-    private void displayContradictionsOld(int[][] matrixContradictions, Map<Assessment, Integer> mapContradictions, QuasiExpertConfig config, List<Criteria> criteriaList) {
-        System.out.println("Матрица противоречий: ");
-        for (int i = 0; i < config.getLen(); i++) {
-            for (int j = 0; j < config.getLen(); j++) {
-                System.out.print(matrixContradictions[i][j] + " ");
-            }
-            System.out.println("-> " + mapContradictions.get(getAssessmentByOrderId(i, criteriaList)));
-        }
-        System.out.println();
     }
 }

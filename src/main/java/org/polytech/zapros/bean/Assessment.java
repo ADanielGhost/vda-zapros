@@ -1,6 +1,7 @@
 package org.polytech.zapros.bean;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,8 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class Assessment {
 
     private long id;

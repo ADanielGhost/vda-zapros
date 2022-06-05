@@ -38,8 +38,8 @@ public class AlternativeRelativeRanksQVComparator implements Comparator<Alternat
             }
 
             Integer value = quasiExpertQV.getQualityVariationMap().entrySet().stream()
-                .filter(x -> ((x.getKey().getI() == assessment1 && x.getKey().getJ() == assessment2) ||
-                    (x.getKey().getI() == assessment2 && x.getKey().getJ() == assessment1)))
+                .filter(x -> ((x.getKey().getI().equals(assessment1) && x.getKey().getJ().equals(assessment2)) ||
+                    (x.getKey().getI().equals(assessment2) && x.getKey().getJ().equals(assessment1))))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new)
                 .getValue();
