@@ -28,7 +28,8 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
 
     @Override
     public List<? extends AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config) {
-
+        log.info("rankAlternatives started");
+        System.out.println("Ранги оценок для альтернативы:");
         List<AlternativeOrderResult> result = alternativeList.stream()
             .map(alternative -> {
                 AlternativeOrderResult alternativeResult = new AlternativeOrderResult();
@@ -38,12 +39,14 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
                 return alternativeResult;
             })
             .collect(Collectors.toList());
+        System.out.println();
 
         for (QuasiExpert qe: qes) {
             setRelativeRanks(result, qe);
         }
         setFinalRank(result);
 
+        log.info("rankAlternatives finished");
         return result;
     }
 
@@ -95,6 +98,8 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
             result.put(quasiExpert, localRanks);
         }
 
+        System.out.println(alternative.getName());
+        result.forEach((k, v) -> System.out.println("qe" + k.getId() + " " + v.stream().map(String::valueOf).collect(Collectors.joining(" "))));
         return result;
     }
 }

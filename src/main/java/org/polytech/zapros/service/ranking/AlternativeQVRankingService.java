@@ -148,9 +148,6 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
             return v1.compareTo(v2);
         });
 
-        map.forEach((k, v) -> System.out.println(k.getAlternative().getName() + " -> " + v));
-        System.out.println();
-
         int cur = 1;
         for (int i = 0; i < entries.size() - 1; i++) {
             int oldValue = entries.get(i).getValue();
