@@ -30,10 +30,12 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
     private final Log log = LogFactory.getLog(this.getClass());
 
     private List<QuasiExpertQV> getRanksBLUE(List<QuasiExpert> qes, List<Criteria> criteriaList) {
+        System.out.println("Оценки квазиэкспертов:");
         qes.forEach(x -> {
             x.getRanks().forEach((k, v) -> System.out.println(k.getName() + " " + v));
             System.out.println();
         });
+        System.out.println();
 
         List<QuasiExpertQV> result = new ArrayList<>();
 
@@ -59,6 +61,12 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
             result.add(qv);
         }
 
+        System.out.println("Изменения качества квазиэкспертов:");
+        result.forEach(x -> {
+            x.getQualityVariationMap().forEach((k, v) -> System.out.println(k.getI().getName() + "->" + k.getJ().getName() + " " + v));
+            System.out.println();
+        });
+        System.out.println();
         return result;
     }
 
@@ -76,8 +84,8 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
             })
             .collect(Collectors.toList());
 
-        for (QuasiExpertQV qeqv: qeqvs) {
-            setRelativeRanks(result, qeqv);
+        for (QuasiExpertQV qe: qeqvs) {
+            setRelativeRanks(result, qe);
         }
         setFinalRank(result);
 
