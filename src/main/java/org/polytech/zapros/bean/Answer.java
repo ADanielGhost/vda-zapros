@@ -1,5 +1,6 @@
 package org.polytech.zapros.bean;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 public class Answer {
 
     public enum AnswerType { BETTER, WORSE, EQUAL }
