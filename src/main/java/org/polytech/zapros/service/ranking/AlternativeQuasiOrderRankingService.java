@@ -10,10 +10,11 @@ import java.util.stream.Collectors;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.polytech.zapros.bean.Criteria;
+import org.polytech.zapros.bean.alternative.AlternativeOrderResult;
 import org.springframework.stereotype.Component;
 
 import org.polytech.zapros.bean.Alternative;
-import org.polytech.zapros.bean.AlternativeResult;
+import org.polytech.zapros.bean.alternative.AlternativeResult;
 import org.polytech.zapros.bean.Assessment;
 import org.polytech.zapros.bean.QuasiExpert;
 import org.polytech.zapros.bean.QuasiExpertConfig;
@@ -25,14 +26,15 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
 
     private final Log log = LogFactory.getLog(this.getClass());
 
-    public List<AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config) {
+    @Override
+    public List<? extends AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config) {
 
-        List<AlternativeResult> result = alternativeList.stream()
+        List<AlternativeOrderResult> result = alternativeList.stream()
             .map(alternative -> {
-                AlternativeResult alternativeResult = new AlternativeResult();
+                AlternativeOrderResult alternativeResult = new AlternativeOrderResult();
                 alternativeResult.setAlternative(alternative);
                 alternativeResult.setRelativeRanks(new HashMap<>());
-                alternativeResult.setAssessmentsRanks(getQeOrderedRanks(alternative, qes));
+                alternativeResult.setAssessmentsRanks(calcAssessmentsRanks(alternative, qes));
                 return alternativeResult;
             })
             .collect(Collectors.toList());
@@ -45,10 +47,10 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
         return result;
     }
 
-    private void setRelativeRanks(List<AlternativeResult> alternativeResultList, QuasiExpert quasiExpert) {
+    private void setRelativeRanks(List<AlternativeOrderResult> alternativeResultList, QuasiExpert quasiExpert) {
         int cur = 1;
 
-        Comparator<AlternativeResult> comparator = new AlternativeRelativeRanksComparator(quasiExpert);
+        Comparator<AlternativeOrderResult> comparator = new AlternativeRelativeRanksComparator(quasiExpert);
         alternativeResultList.sort(comparator);
 
         for (int i = 0; i < alternativeResultList.size() - 1; i++) {
@@ -62,9 +64,9 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
         alternativeResultList.get(alternativeResultList.size() - 1).getRelativeRanks().put(quasiExpert, cur);
     }
 
-    private void setFinalRank(List<AlternativeResult> alternativeResultList) {
+    private void setFinalRank(List<AlternativeOrderResult> alternativeResultList) {
         int cur = 1;
-        Comparator<AlternativeResult> comparator = new AlternativeFinalRankComparator();
+        Comparator<AlternativeOrderResult> comparator = new AlternativeFinalRankComparator();
         alternativeResultList.sort(comparator);
 
         for (int i = 0; i < alternativeResultList.size() - 1; i++) {
@@ -78,14 +80,13 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
         alternativeResultList.get(alternativeResultList.size() - 1).setFinalRank(cur);
     }
 
-    private Map<QuasiExpert, List<Integer>> getQeOrderedRanks(Alternative alternative, List<QuasiExpert> qes) {
+    private Map<QuasiExpert, List<Integer>> calcAssessmentsRanks(Alternative alternative, List<QuasiExpert> qes) {
         Map<QuasiExpert, List<Integer>> result = new HashMap<>();
 
         for (QuasiExpert quasiExpert: qes) {
             List<Integer> localRanks = new ArrayList<>();
             for (Assessment assessment: quasiExpert.getRanks().keySet()) {
                 if (alternative.getAssessments().contains(assessment)) {
-                    log.info("OrderRanking: alternative.getAssessments().contains(assessment)");
                     localRanks.add(quasiExpert.getRanks().get(assessment));
                 }
             }

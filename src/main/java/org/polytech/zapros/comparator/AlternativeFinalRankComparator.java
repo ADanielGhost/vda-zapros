@@ -2,15 +2,15 @@ package org.polytech.zapros.comparator;
 
 import java.util.Comparator;
 
-import org.polytech.zapros.bean.AlternativeResult;
 import org.polytech.zapros.bean.QuasiExpert;
+import org.polytech.zapros.bean.alternative.AlternativeOrderResult;
 
 /**
  * Компаратор для окончательных рангов альтернатив.
  */
-public class AlternativeFinalRankComparator implements Comparator<AlternativeResult> {
+public class AlternativeFinalRankComparator implements Comparator<AlternativeOrderResult> {
     @Override
-    public int compare(AlternativeResult o1, AlternativeResult o2) {
+    public int compare(AlternativeOrderResult o1, AlternativeOrderResult o2) {
         int res = 0;
         int count = o1.getRelativeRanks().size();
 

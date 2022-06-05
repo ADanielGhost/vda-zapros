@@ -10,10 +10,11 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.polytech.zapros.bean.alternative.AlternativeQVResult;
 import org.springframework.stereotype.Component;
 
 import org.polytech.zapros.bean.Alternative;
-import org.polytech.zapros.bean.AlternativeResult;
+import org.polytech.zapros.bean.alternative.AlternativeResult;
 import org.polytech.zapros.bean.Assessment;
 import org.polytech.zapros.bean.Criteria;
 import org.polytech.zapros.bean.QualityVariation;
@@ -62,13 +63,13 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
     }
 
     @Override
-    public List<AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config) {
+    public List<? extends AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config) {
         log.info("rankAlternatives started");
         List<QuasiExpertQV> qeqvs = getRanksBLUE(qes, criteriaList);
 
-        List<AlternativeResult> result = alternativeList.stream()
+        List<AlternativeQVResult> result = alternativeList.stream()
             .map(alternative -> {
-                AlternativeResult alternativeResult = new AlternativeResult();
+                AlternativeQVResult alternativeResult = new AlternativeQVResult();
                 alternativeResult.setAlternative(alternative);
                 alternativeResult.setRelativeQVRanks(new HashMap<>());
                 return alternativeResult;
@@ -84,9 +85,9 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
         return result;
     }
 
-    private void setFinalRank(List<AlternativeResult> alternativeResultList) {
+    private void setFinalRank(List<AlternativeQVResult> alternativeResultList) {
         int cur = 1;
-        Comparator<AlternativeResult> comparator = new AlternativeFinalRankQVComparator();
+        Comparator<AlternativeQVResult> comparator = new AlternativeFinalRankQVComparator();
         alternativeResultList.sort(comparator);
 
         for (int i = 0; i < alternativeResultList.size() - 1; i++) {
@@ -100,11 +101,11 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
         alternativeResultList.get(alternativeResultList.size() - 1).setFinalRank(cur);
     }
 
-    private void setRelativeRanks(List<AlternativeResult> alternativeResultList, QuasiExpertQV qe) {
-        Comparator<AlternativeResult> comparator = new AlternativeRelativeRanksQVComparator(qe);
+    private void setRelativeRanks(List<AlternativeQVResult> alternativeResultList, QuasiExpertQV qe) {
+        Comparator<AlternativeQVResult> comparator = new AlternativeRelativeRanksQVComparator(qe);
 
-        Map<AlternativeResult, Integer> map = new HashMap<>();
-        for (AlternativeResult alternativeResult: alternativeResultList) {
+        Map<AlternativeQVResult, Integer> map = new HashMap<>();
+        for (AlternativeQVResult alternativeResult: alternativeResultList) {
             map.put(alternativeResult, 0);
         }
 
@@ -132,7 +133,7 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
             }
         }
 
-        List<Entry<AlternativeResult, Integer>> entries = new ArrayList<>(map.entrySet());
+        List<Entry<AlternativeQVResult, Integer>> entries = new ArrayList<>(map.entrySet());
         entries.sort((e1, e2) -> {
             Integer v1 = e1.getValue();
             Integer v2 = e2.getValue();
@@ -154,7 +155,7 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
 
         // TODO SIDE-EFFECTS!
 
-        for (AlternativeResult alternativeResult: alternativeResultList) {
+        for (AlternativeQVResult alternativeResult: alternativeResultList) {
             alternativeResult.getRelativeQVRanks().put(qe, map.get(alternativeResult));
         }
     }

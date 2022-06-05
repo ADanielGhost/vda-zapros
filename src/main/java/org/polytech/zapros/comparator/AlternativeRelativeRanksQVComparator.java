@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.polytech.zapros.bean.AlternativeResult;
 import org.polytech.zapros.bean.Assessment;
 import org.polytech.zapros.bean.QuasiExpertQV;
+import org.polytech.zapros.bean.alternative.AlternativeQVResult;
 
-public class AlternativeRelativeRanksQVComparator implements Comparator<AlternativeResult> {
+public class AlternativeRelativeRanksQVComparator implements Comparator<AlternativeQVResult> {
 
     private final QuasiExpertQV quasiExpertQV;
 
@@ -17,7 +17,7 @@ public class AlternativeRelativeRanksQVComparator implements Comparator<Alternat
     }
 
     @Override
-    public int compare(AlternativeResult o1, AlternativeResult o2) {
+    public int compare(AlternativeQVResult o1, AlternativeQVResult o2) {
         List<Assessment> assessmentList1 = new ArrayList<>(o1.getAlternative().getAssessments());
         List<Assessment> assessmentList2 = new ArrayList<>(o2.getAlternative().getAssessments());
 

@@ -2,12 +2,12 @@ package org.polytech.zapros.comparator;
 
 import java.util.Comparator;
 
-import org.polytech.zapros.bean.AlternativeResult;
 import org.polytech.zapros.bean.QuasiExpertQV;
+import org.polytech.zapros.bean.alternative.AlternativeQVResult;
 
-public class AlternativeFinalRankQVComparator implements Comparator<AlternativeResult> {
+public class AlternativeFinalRankQVComparator implements Comparator<AlternativeQVResult> {
     @Override
-    public int compare(AlternativeResult o1, AlternativeResult o2) {
+    public int compare(AlternativeQVResult o1, AlternativeQVResult o2) {
         int res = 0;
         int count = o1.getRelativeQVRanks().size();
 
