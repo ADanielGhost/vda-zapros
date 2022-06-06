@@ -83,7 +83,12 @@ public class BuildQesServiceImpl implements BuildQesService {
         switch (answer.getAnswerType()) {
             case BETTER: return setOneAnswer(answer.getI().getOrderId(), answer.getJ().getOrderId(), 0, 0, false, new ArrayList<>(), quasiExpert, criteriaList, config);
             case WORSE: return setOneAnswer(answer.getJ().getOrderId(), answer.getI().getOrderId(), 0, 0, false, new ArrayList<>(), quasiExpert, criteriaList, config);
-            case EQUAL: throw new IllegalStateException("CANNOT ADD EQUAL ANSWER!!!");
+            case EQUAL: {
+                // A2 = B2 <=> A2 > B2 && B2 > A2
+                boolean first = setOneAnswer(answer.getJ().getOrderId(), answer.getI().getOrderId(), 0, 0, true, new ArrayList<>(), quasiExpert, criteriaList, config);
+                boolean second = setOneAnswer(answer.getJ().getOrderId(), answer.getI().getOrderId(), 0, 0, true, new ArrayList<>(), quasiExpert, criteriaList, config);
+                return first || second;
+            }
             default: throw new IllegalStateException("Unexpected value: TODO" + answer.getAnswerType());
         }
     }
