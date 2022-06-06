@@ -80,14 +80,12 @@ public class BuildQesServiceImpl implements BuildQesService {
     }
 
     public boolean setOneAnswer(Answer answer, QuasiExpert quasiExpert, List<Criteria> criteriaList, QuasiExpertConfig config) {
-        System.out.println();
         switch (answer.getAnswerType()) {
             case BETTER: return setOneAnswer(answer.getI().getOrderId(), answer.getJ().getOrderId(), 0, 0, false, new ArrayList<>(), quasiExpert, criteriaList, config);
             case WORSE: return setOneAnswer(answer.getJ().getOrderId(), answer.getI().getOrderId(), 0, 0, false, new ArrayList<>(), quasiExpert, criteriaList, config);
             case EQUAL: {
                 // A2 = B2 <=> A2 > B2 && B2 > A2
                 boolean first = setOneAnswer(answer.getI().getOrderId(), answer.getJ().getOrderId(), 0, 0, true, new ArrayList<>(), quasiExpert, criteriaList, config);
-                System.out.println();
                 boolean second = setOneAnswer(answer.getJ().getOrderId(), answer.getI().getOrderId(), 0, 0, true, new ArrayList<>(), quasiExpert, criteriaList, config);
                 return first || second;
             }
@@ -107,11 +105,7 @@ public class BuildQesServiceImpl implements BuildQesService {
      * {@code false}, если противоречия есть (требуется новый квазиэксперт).
      */
     private boolean setOneAnswer(int i, int j, int startWorse, int startBetter, boolean isEqual, List<Point> points,
-                                     QuasiExpert qe, List<Criteria> criteriaList, QuasiExpertConfig config) {
-        System.out.println("!!! setOneAnswer " +
-            ", i: "+getAssessmentByOrderId(i, criteriaList).getName()+"("+i+")"+
-            ", j: "+getAssessmentByOrderId(j, criteriaList).getName()+"("+j+")"+
-            ", startWorse: "+startWorse+", startBetter: "+startBetter);
+                                 QuasiExpert qe, List<Criteria> criteriaList, QuasiExpertConfig config) {
 
         if (!isEqual && qe.getMatrix()[j][i] == 1) return false;
 
