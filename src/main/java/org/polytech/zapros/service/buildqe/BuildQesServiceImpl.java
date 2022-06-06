@@ -80,6 +80,7 @@ public class BuildQesServiceImpl implements BuildQesService {
     }
 
     public boolean setOneAnswer(Answer answer, QuasiExpert quasiExpert, List<Criteria> criteriaList, QuasiExpertConfig config) {
+        System.out.println();
         switch (answer.getAnswerType()) {
             case BETTER: return setOneAnswer(answer.getI().getOrderId(), answer.getJ().getOrderId(), 0, 0, false, new ArrayList<>(), quasiExpert, criteriaList, config);
             case WORSE: return setOneAnswer(answer.getJ().getOrderId(), answer.getI().getOrderId(), 0, 0, false, new ArrayList<>(), quasiExpert, criteriaList, config);
