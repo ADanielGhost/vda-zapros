@@ -86,7 +86,8 @@ public class BuildQesServiceImpl implements BuildQesService {
             case WORSE: return setOneAnswer(answer.getJ().getOrderId(), answer.getI().getOrderId(), 0, 0, false, new ArrayList<>(), quasiExpert, criteriaList, config);
             case EQUAL: {
                 // A2 = B2 <=> A2 > B2 && B2 > A2
-                boolean first = setOneAnswer(answer.getJ().getOrderId(), answer.getI().getOrderId(), 0, 0, true, new ArrayList<>(), quasiExpert, criteriaList, config);
+                boolean first = setOneAnswer(answer.getI().getOrderId(), answer.getJ().getOrderId(), 0, 0, true, new ArrayList<>(), quasiExpert, criteriaList, config);
+                System.out.println();
                 boolean second = setOneAnswer(answer.getJ().getOrderId(), answer.getI().getOrderId(), 0, 0, true, new ArrayList<>(), quasiExpert, criteriaList, config);
                 return first || second;
             }
