@@ -152,7 +152,8 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
         }
         log.info("!!!");
     }
-    public Assessment getAssessmentByOrderId(int orderId, List<Criteria> criteriaList) {
+
+    private Assessment getAssessmentByOrderId(int orderId, List<Criteria> criteriaList) {
         for (Criteria c: criteriaList) {
             for (Assessment a: c.getAssessments()) {
                 if (orderId == a.getOrderId()) return a;

@@ -1,5 +1,6 @@
 package org.polytech.zapros.service.qe;
 
+import org.polytech.zapros.service.buildqe.BuildQesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -12,8 +13,9 @@ public class QuasiExpertZaprosService extends QuasiExpertServiceImpl {
 
     @Autowired
     public QuasiExpertZaprosService(
+            BuildQesService buildQesService,
             @Qualifier("validatingQesZaprosService") ValidatingQesService validatingQesService,
             CorrectingContradictionsService correctingContradictionsService) {
-        super(validatingQesService, correctingContradictionsService);
+        super(buildQesService, validatingQesService, correctingContradictionsService);
     }
 }
