@@ -31,10 +31,10 @@ public class AlternativeRelativeRanksOrderComparator implements MyComparator<Alt
             else equal++;
         }
 
-        System.out.println();
-        System.out.println("!!! compare ORDER: " + o1.getAlternative().getName() + " -> " + o1.getAssessmentsRanks().get(qe).stream().map(String::valueOf).collect(Collectors.joining(",")));
-        System.out.println("!!! compare ORDER: " + o2.getAlternative().getName() + " -> " + o2.getAssessmentsRanks().get(qe).stream().map(String::valueOf).collect(Collectors.joining(",")));
-        System.out.println("!!! better: " + better + ", worse: " + worse + ", equal: " + equal);
+//        System.out.println();
+//        System.out.println("!!! compare ORDER: " + o1.getAlternative().getName() + " -> " + o1.getAssessmentsRanks().get(qe).stream().map(String::valueOf).collect(Collectors.joining(",")));
+//        System.out.println("!!! compare ORDER: " + o2.getAlternative().getName() + " -> " + o2.getAssessmentsRanks().get(qe).stream().map(String::valueOf).collect(Collectors.joining(",")));
+//        System.out.println("!!! better: " + better + ", worse: " + worse + ", equal: " + equal);
 
         if ((better > 0) && (worse == 0)) return CompareType.BETTER;
         else if ((better == 0) && (worse > 0)) return CompareType.WORSE;

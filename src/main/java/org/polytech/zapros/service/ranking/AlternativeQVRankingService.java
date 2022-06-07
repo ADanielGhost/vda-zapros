@@ -125,7 +125,7 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
             map.put(alternativeResult, 0);
         }
 
-        System.out.println("!!!!!! compareQV interval !!!!!!!");
+//        System.out.println("!!!!!! compareQV interval !!!!!!!");
         for (int i = 0; i < alternativeResultList.size(); i++) {
             for (int j = i; j < alternativeResultList.size(); j++) {
                 if (i == j) continue;
@@ -134,8 +134,8 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
                 AlternativeQVResult alternativeJ = alternativeResultList.get(j);
 
                 CompareType compare = comparator.compareWithType(alternativeI, alternativeJ);
-                System.out.println("!!! so type is " + compare);
-                System.out.println();
+//                System.out.println("!!! so type is " + compare);
+//                System.out.println();
                 mapCompare.put(AlternativePair.of(alternativeI.getAlternative(), alternativeJ.getAlternative()), compare);
 
                 switch (compare) {
@@ -183,9 +183,9 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
         entries.get(entries.size() - 1).setValue(cur);
 
         // TODO SIDE-EFFECTS!
-        System.out.println("Entries RANKS");
-        entries.stream().map(entry -> (entry.getKey().getAlternative().getName() + " " + entry.getValue())).forEach(System.out::println);
-        System.out.println();
+//        System.out.println("Entries RANKS");
+//        entries.stream().map(entry -> (entry.getKey().getAlternative().getName() + " " + entry.getValue())).forEach(System.out::println);
+//        System.out.println();
 
         for (AlternativeQVResult alternativeResult: alternativeResultList) {
             alternativeResult.getRelativeQVRanks().put(qe, map.get(alternativeResult));

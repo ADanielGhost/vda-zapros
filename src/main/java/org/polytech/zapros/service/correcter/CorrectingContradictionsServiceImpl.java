@@ -94,7 +94,7 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
 
         for (Assessment second: suggestedAnswer.getJ()) {
             Optional<Answer> answer = answerList.stream()
-                .filter(x -> (x.getI() == first && x.getJ() == second) || (x.getI() == second && x.getJ() == first))
+                .filter(x -> (x.getI().equals(first) && x.getJ().equals(second)) || (x.getI().equals(second) && x.getJ().equals(first)))
                 .filter(x -> x.getAnswerAuthor() != AnswerAuthor.REPLACED)
                 .findFirst();
 
@@ -103,6 +103,7 @@ public class CorrectingContradictionsServiceImpl implements CorrectingContradict
             }
         }
 
+        log.error("CANNOT FIND ANSWER FOR REPLACE!!!");
         throw new IllegalStateException("CANNOT FIND ANSWER FOR REPLACE!!!");
     }
 

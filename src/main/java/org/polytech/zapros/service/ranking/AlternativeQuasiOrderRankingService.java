@@ -66,7 +66,7 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
             map.put(alternativeResult, 0);
         }
 
-        System.out.println("!!!!!! compareOrder !!!!!!!");
+//        System.out.println("!!!!!! compareOrder !!!!!!!");
         for (int i = 0; i < alternativeResultList.size(); i++) {
             for (int j = i; j < alternativeResultList.size(); j++) {
                 if (i == j) continue;
@@ -75,8 +75,8 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
                 AlternativeOrderResult alternativeJ = alternativeResultList.get(j);
 
                 CompareType compare = comparator.compareWithType(alternativeI, alternativeJ);
-                System.out.println("!!! so type is " + compare);
-                System.out.println();
+//                System.out.println("!!! so type is " + compare);
+//                System.out.println();
                 mapCompare.put(AlternativePair.of(alternativeI.getAlternative(), alternativeJ.getAlternative()), compare);
 
                 switch (compare) {
@@ -124,9 +124,9 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
         entries.get(entries.size() - 1).setValue(cur);
 
         // TODO SIDE-EFFECTS!
-        System.out.println("Entries RANKS");
-        entries.stream().map(entry -> (entry.getKey().getAlternative().getName() + " " + entry.getValue())).forEach(System.out::println);
-        System.out.println();
+//        System.out.println("Entries RANKS");
+//        entries.stream().map(entry -> (entry.getKey().getAlternative().getName() + " " + entry.getValue())).forEach(System.out::println);
+//        System.out.println();
 
         for (AlternativeOrderResult alternativeResult: alternativeResultList) {
             alternativeResult.getRelativeRanks().put(qe, map.get(alternativeResult));
