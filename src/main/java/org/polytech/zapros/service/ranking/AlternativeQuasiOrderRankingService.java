@@ -79,12 +79,12 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
 
                 System.out.println("!!! " + alternativeI.getAlternative().getName() + " " + compare + " " + alternativeJ.getAlternative().getName());
                 switch (compare) {
-                    case BETTER: {
+                    case WORSE: {
                         int value = map.get(alternativeI);
                         value++;
                         map.put(alternativeI, value);
                     }
-                    case WORSE: {
+                    case BETTER: {
                         int value = map.get(alternativeJ);
                         value++;
                         map.put(alternativeJ, value);
@@ -109,6 +109,10 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
             return v1.compareTo(v2);
         });
 
+        System.out.println("Entries 1");
+        entries.stream().map(entry -> (entry.getKey() + " " + entry.getValue())).forEach(System.out::println);
+        System.out.println();
+
         int cur = 1;
         for (int i = 0; i < entries.size() - 1; i++) {
             int oldValue = entries.get(i).getValue();
@@ -120,6 +124,9 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
         entries.get(entries.size() - 1).setValue(cur);
 
         // TODO SIDE-EFFECTS!
+        System.out.println("Entries 2");
+        entries.stream().map(entry -> (entry.getKey() + " " + entry.getValue())).forEach(System.out::println);
+        System.out.println();
 
         for (AlternativeOrderResult alternativeResult: alternativeResultList) {
             alternativeResult.getRelativeRanks().put(qe, map.get(alternativeResult));

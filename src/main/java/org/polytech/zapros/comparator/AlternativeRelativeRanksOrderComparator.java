@@ -27,8 +27,8 @@ public class AlternativeRelativeRanksOrderComparator implements MyComparator<Alt
         }
 
         if (count == 0) return CompareType.EQUAL;
-        else if (res == -count) return CompareType.WORSE;
-        else if (res == count) return CompareType.BETTER;
+        else if (res == -count) return CompareType.BETTER;
+        else if (res == count) return CompareType.WORSE;
         else return CompareType.NOT_COMPARABLE;
     }
 }
