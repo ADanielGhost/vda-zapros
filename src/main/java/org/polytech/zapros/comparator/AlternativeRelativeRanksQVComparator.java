@@ -69,8 +69,8 @@ public class AlternativeRelativeRanksQVComparator implements MyComparator<Altern
         }
 
         System.out.println();
-        System.out.println("!!! compare: o1: " + o1.getAlternative().getName() + " -> " + qvRanks1.stream().map(String::valueOf).collect(Collectors.joining(",")));
-        System.out.println("!!! compare: o2: " + o2.getAlternative().getName() + " -> " + qvRanks2.stream().map(String::valueOf).collect(Collectors.joining(",")));
+        System.out.println("!!! compare QV: o1: " + o1.getAlternative().getName() + " -> " + qvRanks1.stream().map(String::valueOf).collect(Collectors.joining(",")));
+        System.out.println("!!! compare QV: o2: " + o2.getAlternative().getName() + " -> " + qvRanks2.stream().map(String::valueOf).collect(Collectors.joining(",")));
         System.out.println("!!! better: " + better + ", worse: " + worse + ", " + equal);
         System.out.println();
 
