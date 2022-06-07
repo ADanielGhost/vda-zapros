@@ -83,11 +83,13 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
                         int value = map.get(alternativeI);
                         value++;
                         map.put(alternativeI, value);
+                        break;
                     }
                     case BETTER: {
                         int value = map.get(alternativeJ);
                         value++;
                         map.put(alternativeJ, value);
+                        break;
                     }
                     case EQUAL: case NOT_COMPARABLE: {
                         int valueI = map.get(alternativeI);
@@ -96,6 +98,7 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
                         valueJ++;
                         map.put(alternativeI, valueI);
                         map.put(alternativeJ, valueJ);
+                        break;
                     }
                     default: throw new IllegalArgumentException("compare in altRanking type");
                 }
