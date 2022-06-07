@@ -63,8 +63,8 @@ public class AlternativeRelativeRanksQVComparator implements MyComparator<Altern
         int equal = 0;
 
         for (int i = 0; i < size; i++) {
-            if (qvRanks1.get(i) < qvRanks2.get(i)) worse++;
-            else if (qvRanks1.get(i) > qvRanks2.get(i)) better++;
+            if (qvRanks1.get(i) < qvRanks2.get(i)) better++;
+            else if (qvRanks1.get(i) > qvRanks2.get(i)) worse++;
             else equal++;
         }
 
@@ -73,8 +73,8 @@ public class AlternativeRelativeRanksQVComparator implements MyComparator<Altern
         System.out.println("!!! compare QV: " + o2.getAlternative().getName() + " -> " + qvRanks2.stream().map(String::valueOf).collect(Collectors.joining(",")));
         System.out.println("!!! better: " + better + ", worse: " + worse + ", equal: " + equal);
 
-        if ((better == 0) && (worse > 0)) return CompareType.WORSE;
-        else if ((better > 0) && (worse == 0)) return CompareType.BETTER;
+        if ((better > 0) && (worse == 0)) return CompareType.BETTER;
+        else if ((better == 0) && (worse > 0)) return CompareType.WORSE;
         else if ((better == 0) && (worse == 0)) return CompareType.EQUAL;
         else return CompareType.NOT_COMPARABLE;
     }

@@ -26,8 +26,8 @@ public class AlternativeRelativeRanksOrderComparator implements MyComparator<Alt
         int equal = 0;
 
         for (int i = 0; i < size; i++) {
-            if (o1.getAssessmentsRanks().get(qe).get(i) < o2.getAssessmentsRanks().get(qe).get(i)) worse++;
-            else if (o1.getAssessmentsRanks().get(qe).get(i) > o2.getAssessmentsRanks().get(qe).get(i)) better++;
+            if (o1.getAssessmentsRanks().get(qe).get(i) < o2.getAssessmentsRanks().get(qe).get(i)) better++;
+            else if (o1.getAssessmentsRanks().get(qe).get(i) > o2.getAssessmentsRanks().get(qe).get(i)) worse++;
             else equal++;
         }
 
@@ -36,8 +36,8 @@ public class AlternativeRelativeRanksOrderComparator implements MyComparator<Alt
         System.out.println("!!! compare ORDER: " + o2.getAlternative().getName() + " -> " + o2.getAssessmentsRanks().get(qe).stream().map(String::valueOf).collect(Collectors.joining(",")));
         System.out.println("!!! better: " + better + ", worse: " + worse + ", equal: " + equal);
 
-        if ((better == 0) && (worse > 0)) return CompareType.WORSE;
-        else if ((better > 0) && (worse == 0)) return CompareType.BETTER;
+        if ((better > 0) && (worse == 0)) return CompareType.BETTER;
+        else if ((better == 0) && (worse > 0)) return CompareType.WORSE;
         else if ((better == 0) && (worse == 0)) return CompareType.EQUAL;
         else return CompareType.NOT_COMPARABLE;
     }

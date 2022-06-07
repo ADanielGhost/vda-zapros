@@ -139,16 +139,16 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
                 mapCompare.put(AlternativePair.of(alternativeI.getAlternative(), alternativeJ.getAlternative()), compare);
 
                 switch (compare) {
-                    case WORSE: {
-                        int value = map.get(alternativeI);
-                        value++;
-                        map.put(alternativeI, value);
-                        break;
-                    }
                     case BETTER: {
                         int value = map.get(alternativeJ);
                         value++;
                         map.put(alternativeJ, value);
+                        break;
+                    }
+                    case WORSE: {
+                        int value = map.get(alternativeI);
+                        value++;
+                        map.put(alternativeI, value);
                         break;
                     }
                     case EQUAL: case NOT_COMPARABLE: {

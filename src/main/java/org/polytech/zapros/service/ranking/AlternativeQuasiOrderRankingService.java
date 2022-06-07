@@ -80,16 +80,16 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
                 mapCompare.put(AlternativePair.of(alternativeI.getAlternative(), alternativeJ.getAlternative()), compare);
 
                 switch (compare) {
-                    case WORSE: {
-                        int value = map.get(alternativeI);
-                        value++;
-                        map.put(alternativeI, value);
-                        break;
-                    }
                     case BETTER: {
                         int value = map.get(alternativeJ);
                         value++;
                         map.put(alternativeJ, value);
+                        break;
+                    }
+                    case WORSE: {
+                        int value = map.get(alternativeI);
+                        value++;
+                        map.put(alternativeI, value);
                         break;
                     }
                     case EQUAL: case NOT_COMPARABLE: {
@@ -131,23 +131,6 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
         for (AlternativeOrderResult alternativeResult: alternativeResultList) {
             alternativeResult.getRelativeRanks().put(qe, map.get(alternativeResult));
         }
-    }
-
-    private void setRelativeRanksOLD(List<AlternativeOrderResult> alternativeResultList, QuasiExpert quasiExpert) {
-        int cur = 1;
-
-        Comparator<AlternativeOrderResult> comparator = new AlternativeRelativeRanksOrderComparator(quasiExpert);
-        alternativeResultList.sort(comparator);
-
-        for (int i = 0; i < alternativeResultList.size() - 1; i++) {
-            alternativeResultList.get(i).getRelativeRanks().put(quasiExpert, cur);
-
-            if (comparator.compare(alternativeResultList.get(i), alternativeResultList.get(i + 1)) != 0) {
-                cur++;
-            }
-        }
-
-        alternativeResultList.get(alternativeResultList.size() - 1).getRelativeRanks().put(quasiExpert, cur);
     }
 
     private void setFinalRank(List<AlternativeOrderResult> alternativeResultList) {
