@@ -1,5 +1,7 @@
 package org.polytech.zapros.comparator;
 
+import java.util.stream.Collectors;
+
 import org.polytech.zapros.bean.QuasiExpert;
 import org.polytech.zapros.bean.alternative.AlternativeOrderResult;
 import org.polytech.zapros.bean.alternative.CompareType;
@@ -9,26 +11,35 @@ import org.polytech.zapros.bean.alternative.CompareType;
  */
 public class AlternativeRelativeRanksOrderComparator implements MyComparator<AlternativeOrderResult> {
 
-    private final QuasiExpert quasiExpert;
+    private final QuasiExpert qe;
 
     public AlternativeRelativeRanksOrderComparator(QuasiExpert quasiExpert) {
-        this.quasiExpert = quasiExpert;
+        this.qe = quasiExpert;
     }
 
     @Override
     public CompareType compareWithType(AlternativeOrderResult o1, AlternativeOrderResult o2) {
-        int res = 0;
-        int count = o1.getAssessmentsRanks().get(quasiExpert).size();
+        int size = o1.getAssessmentsRanks().get(qe).size();
 
-        for (int i = 0; i < o1.getAssessmentsRanks().get(quasiExpert).size(); i++) {
-            if (o1.getAssessmentsRanks().get(quasiExpert).get(i) < o2.getAssessmentsRanks().get(quasiExpert).get(i)) res--;
-            else if (o1.getAssessmentsRanks().get(quasiExpert).get(i) > o2.getAssessmentsRanks().get(quasiExpert).get(i)) res++;
-            else count--;
+        int better = 0;
+        int worse = 0;
+        int equal = 0;
+
+        for (int i = 0; i < size; i++) {
+            if (o1.getAssessmentsRanks().get(qe).get(i) < o2.getAssessmentsRanks().get(qe).get(i)) worse++;
+            else if (o1.getAssessmentsRanks().get(qe).get(i) > o2.getAssessmentsRanks().get(qe).get(i)) better++;
+            else equal++;
         }
 
-        if (count == 0) return CompareType.EQUAL;
-        else if (res == -count) return CompareType.BETTER;
-        else if (res == count) return CompareType.WORSE;
+        System.out.println();
+        System.out.println("!!! compare: o1: " + o1.getAlternative().getName() + " -> " + o1.getAssessmentsRanks().get(qe).stream().map(String::valueOf).collect(Collectors.joining(",")));
+        System.out.println("!!! compare: o2: " + o2.getAlternative().getName() + " -> " + o2.getAssessmentsRanks().get(qe).stream().map(String::valueOf).collect(Collectors.joining(",")));
+        System.out.println("!!! better: " + better + ", worse: " + worse + ", " + equal);
+        System.out.println();
+
+        if ((better == 0) && (worse > 0)) return CompareType.WORSE;
+        else if ((better > 0) && (worse == 0)) return CompareType.BETTER;
+        else if ((better == 0) && (worse == 0)) return CompareType.EQUAL;
         else return CompareType.NOT_COMPARABLE;
     }
 }

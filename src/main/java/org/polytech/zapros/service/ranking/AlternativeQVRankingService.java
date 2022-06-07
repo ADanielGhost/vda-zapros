@@ -135,7 +135,6 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
 
                 CompareType compare = comparator.compareWithType(alternativeI, alternativeJ);
 
-                System.out.println("!!! " + alternativeI.getAlternative().getName() + " " + compare + " " + alternativeJ.getAlternative().getName());
                 switch (compare) {
                     case WORSE: {
                         int value = map.get(alternativeI);
@@ -182,6 +181,9 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
         entries.get(entries.size() - 1).setValue(cur);
 
         // TODO SIDE-EFFECTS!
+        System.out.println("Entries RANKS");
+        entries.stream().map(entry -> (entry.getKey().getAlternative().getName() + " " + entry.getValue())).forEach(System.out::println);
+        System.out.println();
 
         for (AlternativeQVResult alternativeResult: alternativeResultList) {
             alternativeResult.getRelativeQVRanks().put(qe, map.get(alternativeResult));

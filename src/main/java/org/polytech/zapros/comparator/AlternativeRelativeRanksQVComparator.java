@@ -3,6 +3,7 @@ package org.polytech.zapros.comparator;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.polytech.zapros.bean.Assessment;
 import org.polytech.zapros.bean.QuasiExpertQV;
@@ -54,18 +55,28 @@ public class AlternativeRelativeRanksQVComparator implements MyComparator<Altern
         qvRanks1.sort(Comparator.naturalOrder());
         qvRanks2.sort(Comparator.naturalOrder());
 
-        int res = 0;
-        int count = qvRanks1.size();
 
-        for (int i = 0; i < qvRanks1.size(); i++) {
-            if (qvRanks1.get(i) < qvRanks2.get(i)) res--;
-            else if (qvRanks1.get(i) > qvRanks2.get(i)) res++;
-            else count--;
+        int size = qvRanks1.size();
+
+        int better = 0;
+        int worse = 0;
+        int equal = 0;
+
+        for (int i = 0; i < size; i++) {
+            if (qvRanks1.get(i) < qvRanks2.get(i)) worse++;
+            else if (qvRanks1.get(i) > qvRanks2.get(i)) better++;
+            else equal++;
         }
 
-        if (count == 0) return CompareType.EQUAL;
-        else if (res == -count) return CompareType.BETTER;
-        else if (res == count) return CompareType.WORSE;
+        System.out.println();
+        System.out.println("!!! compare: o1: " + o1.getAlternative().getName() + " -> " + qvRanks1.stream().map(String::valueOf).collect(Collectors.joining(",")));
+        System.out.println("!!! compare: o2: " + o2.getAlternative().getName() + " -> " + qvRanks2.stream().map(String::valueOf).collect(Collectors.joining(",")));
+        System.out.println("!!! better: " + better + ", worse: " + worse + ", " + equal);
+        System.out.println();
+
+        if ((better == 0) && (worse > 0)) return CompareType.WORSE;
+        else if ((better > 0) && (worse == 0)) return CompareType.BETTER;
+        else if ((better == 0) && (worse == 0)) return CompareType.EQUAL;
         else return CompareType.NOT_COMPARABLE;
     }
 }
