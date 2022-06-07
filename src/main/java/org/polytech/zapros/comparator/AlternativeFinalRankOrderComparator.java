@@ -8,7 +8,7 @@ import org.polytech.zapros.bean.alternative.AlternativeOrderResult;
 /**
  * Компаратор для окончательных рангов альтернатив.
  */
-public class AlternativeFinalRankComparator implements Comparator<AlternativeOrderResult> {
+public class AlternativeFinalRankOrderComparator implements Comparator<AlternativeOrderResult> {
     @Override
     public int compare(AlternativeOrderResult o1, AlternativeOrderResult o2) {
         int res = 0;

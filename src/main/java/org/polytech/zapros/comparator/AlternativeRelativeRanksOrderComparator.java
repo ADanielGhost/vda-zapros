@@ -1,23 +1,22 @@
 package org.polytech.zapros.comparator;
 
-import java.util.Comparator;
-
-import org.polytech.zapros.bean.alternative.AlternativeOrderResult;
 import org.polytech.zapros.bean.QuasiExpert;
+import org.polytech.zapros.bean.alternative.AlternativeOrderResult;
+import org.polytech.zapros.bean.alternative.CompareType;
 
 /**
  * Компаратор для временных рангов альтернатив.
  */
-public class AlternativeRelativeRanksComparator implements Comparator<AlternativeOrderResult> {
+public class AlternativeRelativeRanksOrderComparator implements MyComparator<AlternativeOrderResult> {
 
     private final QuasiExpert quasiExpert;
 
-    public AlternativeRelativeRanksComparator(QuasiExpert quasiExpert) {
+    public AlternativeRelativeRanksOrderComparator(QuasiExpert quasiExpert) {
         this.quasiExpert = quasiExpert;
     }
 
     @Override
-    public int compare(AlternativeOrderResult o1, AlternativeOrderResult o2) {
+    public CompareType compareWithType(AlternativeOrderResult o1, AlternativeOrderResult o2) {
         int res = 0;
         int count = o1.getAssessmentsRanks().get(quasiExpert).size();
 
@@ -27,9 +26,9 @@ public class AlternativeRelativeRanksComparator implements Comparator<Alternativ
             else count--;
         }
 
-        if (count == 0) return 0;
-        else if (res == -count) return -1;
-        else if (res == count) return 1;
-        else return 0;
+        if (count == 0) return CompareType.EQUAL;
+        else if (res == -count) return CompareType.WORSE;
+        else if (res == count) return CompareType.BETTER;
+        else return CompareType.NOT_COMPARABLE;
     }
 }

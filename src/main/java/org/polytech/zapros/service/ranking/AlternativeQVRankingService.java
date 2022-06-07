@@ -10,19 +10,21 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.polytech.zapros.bean.alternative.AlternativeQVResult;
-import org.springframework.stereotype.Component;
-
 import org.polytech.zapros.bean.Alternative;
-import org.polytech.zapros.bean.alternative.AlternativeResult;
+import org.polytech.zapros.bean.alternative.AlternativePair;
+import org.polytech.zapros.bean.alternative.AlternativeRankingResult;
 import org.polytech.zapros.bean.Assessment;
 import org.polytech.zapros.bean.Criteria;
 import org.polytech.zapros.bean.QualityVariation;
 import org.polytech.zapros.bean.QuasiExpert;
 import org.polytech.zapros.bean.QuasiExpertConfig;
 import org.polytech.zapros.bean.QuasiExpertQV;
+import org.polytech.zapros.bean.alternative.AlternativeQVResult;
+import org.polytech.zapros.bean.alternative.CompareType;
 import org.polytech.zapros.comparator.AlternativeFinalRankQVComparator;
 import org.polytech.zapros.comparator.AlternativeRelativeRanksQVComparator;
+import org.polytech.zapros.comparator.MyComparator;
+import org.springframework.stereotype.Component;
 
 @Component
 public class AlternativeQVRankingService implements AlternativeRankingService {
@@ -71,8 +73,9 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
     }
 
     @Override
-    public List<? extends AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config) {
+    public AlternativeRankingResult rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config) {
         log.info("rankAlternatives started");
+        long timeStart = System.currentTimeMillis();
         List<QuasiExpertQV> qeqvs = getRanksBLUE(qes, criteriaList);
 
         List<AlternativeQVResult> result = alternativeList.stream()
@@ -84,13 +87,18 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
             })
             .collect(Collectors.toList());
 
+        Map<QuasiExpert, Map<AlternativePair, CompareType>> mapCompare = new HashMap<>();
         for (QuasiExpertQV qe: qeqvs) {
-            setRelativeRanks(result, qe);
+            Map<AlternativePair, CompareType> tempMap = new HashMap<>();
+            setRelativeRanks(result, qe, tempMap);
+            mapCompare.put(qe.getQuasiExpert(), tempMap);
         }
+
         setFinalRank(result);
 
+        long timeEnd = System.currentTimeMillis();
         log.info("rankAlternatives finished");
-        return result;
+        return new AlternativeRankingResult(result, timeEnd - timeStart, mapCompare);
     }
 
     private void setFinalRank(List<AlternativeQVResult> alternativeResultList) {
@@ -109,34 +117,46 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
         alternativeResultList.get(alternativeResultList.size() - 1).setFinalRank(cur);
     }
 
-    private void setRelativeRanks(List<AlternativeQVResult> alternativeResultList, QuasiExpertQV qe) {
-        Comparator<AlternativeQVResult> comparator = new AlternativeRelativeRanksQVComparator(qe);
+    private void setRelativeRanks(List<AlternativeQVResult> alternativeResultList, QuasiExpertQV qe, Map<AlternativePair, CompareType> mapCompare) {
+        MyComparator<AlternativeQVResult> comparator = new AlternativeRelativeRanksQVComparator(qe);
 
         Map<AlternativeQVResult, Integer> map = new HashMap<>();
         for (AlternativeQVResult alternativeResult: alternativeResultList) {
             map.put(alternativeResult, 0);
         }
 
+        System.out.println("!!!!!! compareQV interval !!!!!!!");
         for (int i = 0; i < alternativeResultList.size(); i++) {
             for (int j = i; j < alternativeResultList.size(); j++) {
                 if (i == j) continue;
 
-                int compare = comparator.compare(alternativeResultList.get(i), alternativeResultList.get(j));
-                if (compare > 0) {
-                    int value = map.get(alternativeResultList.get(i));
-                    value++;
-                    map.put(alternativeResultList.get(i), value);
-                } else if (compare < 0) {
-                    int value = map.get(alternativeResultList.get(j));
-                    value++;
-                    map.put(alternativeResultList.get(j), value);
-                } else {
-                    int valueI = map.get(alternativeResultList.get(i));
-                    int valueJ = map.get(alternativeResultList.get(j));
-                    valueI++;
-                    valueJ++;
-                    map.put(alternativeResultList.get(i), valueI);
-                    map.put(alternativeResultList.get(j), valueJ);
+                AlternativeQVResult alternativeI = alternativeResultList.get(i);
+                AlternativeQVResult alternativeJ = alternativeResultList.get(j);
+
+                CompareType compare = comparator.compareWithType(alternativeI, alternativeJ);
+                mapCompare.put(AlternativePair.of(alternativeI.getAlternative(), alternativeJ.getAlternative()), compare);
+
+                System.out.println("!!! " + alternativeI.getAlternative().getName() + " " + compare + " " + alternativeJ.getAlternative().getName());
+                switch (compare) {
+                    case BETTER: {
+                        int value = map.get(alternativeI);
+                        value++;
+                        map.put(alternativeI, value);
+                    }
+                    case WORSE: {
+                        int value = map.get(alternativeJ);
+                        value++;
+                        map.put(alternativeJ, value);
+                    }
+                    case EQUAL: case NOT_COMPARABLE: {
+                        int valueI = map.get(alternativeI);
+                        int valueJ = map.get(alternativeJ);
+                        valueI++;
+                        valueJ++;
+                        map.put(alternativeI, valueI);
+                        map.put(alternativeJ, valueJ);
+                    }
+                    default: throw new IllegalArgumentException("compare in altRanking type");
                 }
             }
         }

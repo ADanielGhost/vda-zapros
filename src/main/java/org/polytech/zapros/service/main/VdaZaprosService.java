@@ -3,7 +3,7 @@ package org.polytech.zapros.service.main;
 import java.util.List;
 
 import org.polytech.zapros.bean.Alternative;
-import org.polytech.zapros.bean.alternative.AlternativeResult;
+import org.polytech.zapros.bean.alternative.AlternativeRankingResult;
 import org.polytech.zapros.bean.Answer;
 import org.polytech.zapros.bean.Answer.AnswerType;
 import org.polytech.zapros.bean.AnswerCheckResult;
@@ -54,5 +54,5 @@ public interface VdaZaprosService {
      * @param alternativeList лист альтернатив.
      * @return список ранжированных альтернатив.
      */
-    List<? extends AlternativeResult> rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config);
+    AlternativeRankingResult rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config);
 }

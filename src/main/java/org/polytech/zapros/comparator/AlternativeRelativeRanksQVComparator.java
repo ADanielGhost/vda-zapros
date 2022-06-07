@@ -7,8 +7,9 @@ import java.util.List;
 import org.polytech.zapros.bean.Assessment;
 import org.polytech.zapros.bean.QuasiExpertQV;
 import org.polytech.zapros.bean.alternative.AlternativeQVResult;
+import org.polytech.zapros.bean.alternative.CompareType;
 
-public class AlternativeRelativeRanksQVComparator implements Comparator<AlternativeQVResult> {
+public class AlternativeRelativeRanksQVComparator implements MyComparator<AlternativeQVResult> {
 
     private final QuasiExpertQV quasiExpertQV;
 
@@ -17,7 +18,7 @@ public class AlternativeRelativeRanksQVComparator implements Comparator<Alternat
     }
 
     @Override
-    public int compare(AlternativeQVResult o1, AlternativeQVResult o2) {
+    public CompareType compareWithType(AlternativeQVResult o1, AlternativeQVResult o2) {
         List<Assessment> assessmentList1 = new ArrayList<>(o1.getAlternative().getAssessments());
         List<Assessment> assessmentList2 = new ArrayList<>(o2.getAlternative().getAssessments());
 
@@ -62,9 +63,9 @@ public class AlternativeRelativeRanksQVComparator implements Comparator<Alternat
             else count--;
         }
 
-        if (count == 0) return 0;
-        else if (res == -count) return -1;
-        else if (res == count) return 1;
-        else return 0;
+        if (count == 0) return CompareType.EQUAL;
+        else if (res == -count) return CompareType.WORSE;
+        else if (res == count) return CompareType.BETTER;
+        else return CompareType.NOT_COMPARABLE;
     }
 }
