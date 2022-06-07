@@ -13,7 +13,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 public class AlternativeOrderResult extends AlternativeResult {
     /**
      * Ранги оценок квазиэкспертов для данной альтернативы.
@@ -24,4 +23,15 @@ public class AlternativeOrderResult extends AlternativeResult {
      * Относительные ранги исходя из оценок квазиэкспертов для данной альтернативы.
      */
     private Map<QuasiExpert, Integer> relativeRanks;
+
+    @Override
+    public String toString() {
+        return "AlternativeOrderResult{" +
+            "id=" + getId() +
+            ", alternative=" + getAlternative() +
+            ", finalRank=" + getFinalRank() +
+            ", assessmentsRanks=" + assessmentsRanks +
+            ", relativeRanks=" + relativeRanks +
+            '}';
+    }
 }

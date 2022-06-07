@@ -171,10 +171,6 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
             return v1.compareTo(v2);
         });
 
-        System.out.println("Entries 1");
-        entries.stream().map(entry -> (entry.getKey() + " " + entry.getValue())).forEach(System.out::println);
-        System.out.println();
-
         int cur = 1;
         for (int i = 0; i < entries.size() - 1; i++) {
             int oldValue = entries.get(i).getValue();
@@ -186,9 +182,6 @@ public class AlternativeQVRankingService implements AlternativeRankingService {
         entries.get(entries.size() - 1).setValue(cur);
 
         // TODO SIDE-EFFECTS!
-        System.out.println("Entries 2");
-        entries.stream().map(entry -> (entry.getKey() + " " + entry.getValue())).forEach(System.out::println);
-        System.out.println();
 
         for (AlternativeQVResult alternativeResult: alternativeResultList) {
             alternativeResult.getRelativeQVRanks().put(qe, map.get(alternativeResult));
