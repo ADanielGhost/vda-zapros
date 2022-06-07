@@ -75,6 +75,8 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
                 AlternativeOrderResult alternativeJ = alternativeResultList.get(j);
 
                 CompareType compare = comparator.compareWithType(alternativeI, alternativeJ);
+                System.out.println("!!! so type is " + compare);
+                System.out.println();
                 mapCompare.put(AlternativePair.of(alternativeI.getAlternative(), alternativeJ.getAlternative()), compare);
 
                 switch (compare) {
