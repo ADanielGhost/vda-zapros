@@ -16,6 +16,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AlternativeRankingResult {
     private List<? extends AlternativeResult> alternativeResults;
-    private long timeMS;
+    private long nanoTime;
     private Map<QuasiExpert, Map<AlternativePair, CompareType>> mapCompare;
 }

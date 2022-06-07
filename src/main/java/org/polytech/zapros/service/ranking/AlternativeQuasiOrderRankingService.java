@@ -32,7 +32,7 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
     @Override
     public AlternativeRankingResult rankAlternatives(List<QuasiExpert> qes, List<Alternative> alternativeList, List<Criteria> criteriaList, QuasiExpertConfig config) {
         log.info("rankAlternatives started");
-        long timeStart = System.currentTimeMillis();
+        long timeStart = System.nanoTime();
         System.out.println("Ранги оценок для альтернативы:");
         List<AlternativeOrderResult> result = alternativeList.stream()
             .map(alternative -> {
@@ -53,7 +53,7 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
         }
         setFinalRank(result);
 
-        long timeEnd = System.currentTimeMillis();
+        long timeEnd = System.nanoTime();
         log.info("rankAlternatives finished");
         return new AlternativeRankingResult(result, timeEnd - timeStart, mapCompare);
     }
