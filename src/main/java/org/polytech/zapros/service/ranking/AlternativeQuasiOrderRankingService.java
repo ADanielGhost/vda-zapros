@@ -75,7 +75,6 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
                 AlternativeOrderResult alternativeJ = alternativeResultList.get(j);
 
                 CompareType compare = comparator.compareWithType(alternativeI, alternativeJ);
-                mapCompare.put(AlternativePair.of(alternativeI.getAlternative(), alternativeJ.getAlternative()), compare);
 
                 System.out.println("!!! " + alternativeI.getAlternative().getName() + " " + compare + " " + alternativeJ.getAlternative().getName());
                 switch (compare) {
@@ -92,6 +91,7 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
                         break;
                     }
                     case EQUAL: case NOT_COMPARABLE: {
+                        mapCompare.put(AlternativePair.of(alternativeI.getAlternative(), alternativeJ.getAlternative()), compare);
                         int valueI = map.get(alternativeI);
                         int valueJ = map.get(alternativeJ);
                         valueI++;
