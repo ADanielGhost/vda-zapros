@@ -43,7 +43,7 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
                 return alternativeResult;
             })
             .collect(Collectors.toList());
-        System.out.println();
+//        System.out.println();
 
         Map<QuasiExpert, Map<AlternativePair, CompareType>> mapCompare = new HashMap<>();
         for (QuasiExpert qe: qes) {
