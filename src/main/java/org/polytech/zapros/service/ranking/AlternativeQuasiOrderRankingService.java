@@ -164,8 +164,8 @@ public class AlternativeQuasiOrderRankingService implements AlternativeRankingSe
             result.put(quasiExpert, localRanks);
         }
 
-        System.out.println(alternative.getName());
-        result.forEach((k, v) -> System.out.println("qe" + k.getId() + " " + v.stream().map(String::valueOf).collect(Collectors.joining(" "))));
+//        System.out.println(alternative.getName());
+//        result.forEach((k, v) -> System.out.println("qe" + k.getId() + " " + v.stream().map(String::valueOf).collect(Collectors.joining(" "))));
         return result;
     }
 }
