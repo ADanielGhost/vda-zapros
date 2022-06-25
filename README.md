@@ -1,26 +1,42 @@
 ## VDA ZAPROS (Verbal Decision Analysis)
 
-Данный репозиторий представляет собою модуль системы ранжирования альтернатив на основе методов семейства ЗАПРОС. Модуль предоставляет 4 метода &ndash; ЗАПРОС II, ЗАПРОС III, ARACE и экспериментальный метод ARACE QV, совмещающий с себе черты методов ARACE и ЗАПРОС III.
+### About
 
-Работа проводилась в рамках ВКР в СПбПУ Петра Великого под руководством [В. А. Пархоменко](https://github.com/ParkhomenkoV).
+This repository is a module of the alternatives ranking system based on the methods of the ZAPROS family. The module provides 4 methods &ndash; ZAPROS II, ZAPROS III, ARACE and the experimental ARACE QV method which combines the features of the ARACE and ZAPROS III methods.
 
-### Использование в проекте
+The project is completed during the preparation of [Daniil A. Antokhin](https://github.com/ADanielGhost) bachalor's thesis at SPbPU Institute of Computer Science and Technology (SPbPU ICST).
 
-Модуль подключается к проекту так же, как любая зависимость в _java_ &ndash; например, при помощи _maven_. Актуальную версию всегда можно посмотреть [здесь](https://github.com/ADanielGhost/vda-zapros/packages).
+### Authors and contributors
+
+The advisor and contributor [Vladimir A. Parkhomenko](https://github.com/ParkhomenkoV) assistant of SPbPU ICST. The main contributor [Daniil A. Antokhin](https://github.com/ADanielGhost) student of SPbPU ICST.
+
+### Acknowledgment
+
+The authors are grateful to SPbPU Institute of computer science and technology (SPbPU ICST). Special thanks are to Alexander V. Shchukin the head of Applied Informatics program for the support.
+
+### Warranty
+
+The contributors give no warranty for the using of the software.
+
+### License
+
+This program is open to use anywhere and is licensed under the [MIT license](./LICENSE).
 
 ### Usage
 
-Для взаимодействия с клиентом используется класс _VdaZaprosFactory_. Он имеет 2 статических метода &ndash; _getService_ и _getConfig_.
+Use maven or another build automation tool for implement in your project. The current version can always be found [here](https://github.com/ADanielGhost/vda-zapros/packages).
 
-Первый применяет параметр типа _MethodType_, который отвечает за метод, который нам нужен и дает на выходе реализацию экземпляра _VdaZaprosService_, который описывает этапы для работы с клиентом.
+Use class _VdaZaprosFactory_ on client side. This class has 2 static methods &ndash; _getService_ and _getConfig_.
 
-Второй метод принимает параметр типа _List\<Criteria\>_, который содержит набор критериев, для которых мы строим конфиг для постоения квазиэкспертов, который в дальнейшем будет использоваться как параметр к методам _VdaZaprosService_.
+The first one uses the _MethodType_ type parameter, which is responsible for the method we need and gives the output of the _VdaZaprosService_ instance implementation (ZAPROS II, ZAPROS III and another).
 
-### Примеры
+The second method takes a parameter of the _List\<Criteria\>_ type, which contains a set of criteria for which we build a config for building quasiexperts, which will later be used as a parameter to the _VdaZaprosService_ methods.
 
-В примере ниже мы получаем метод _ARACE_ и конфиг для набора критериев _criteriaList_:
+### Examples
 
-    VdaZaprosService serviceQV = VdaZaprosFactory.getService(MethodType.ARACE);
-    QuasiExpertConfig config = VdaZaprosFactory.getConfig(criteriaList);
+In the example below, we get the _ARACE_ method and the config for the _criteriaList_ criteria set:
 
-Также, у модуля есть 2 имплементации &ndash; консольная [console-zapros-impl](https://github.com/ADanielGhost/console-zapros-impl) и веб-имплементация [zapros-web](https://github.com/ADanielGhost/zapros-web).
+     VdaZaprosService service = VdaZaprosFactory.getService(MethodType.ARACE);
+     QuasiExpertConfig config = VdaZaprosFactory.getConfig(criteriaList);
+
+Also, the module has 2 implementations &ndash; console [console-zapros-impl](https://github.com/ADanielGhost/console-zapros-impl) and web implementation [zapros-web](https://github.com/ADanielGhost/zapros-web).
